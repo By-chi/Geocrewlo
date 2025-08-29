@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs3bss7atv52r"]
+
+[ext_resource type="Script" uid="uid://grhge6m1c1cn" path="res://scene/Control/start_screen.gd" id="1_cmsy7"]
+[ext_resource type="Shader" uid="uid://dho2wck4vmud" path="res://gdshader/vacuum_collapse.gdshader" id="2_p8amv"]
+[ext_resource type="Texture2D" uid="uid://c6vngkds6qmfq" path="res://texture/logo/logo_large_color_light.svg" id="3_x64hx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yjh10"]
+shader = ExtResource("2_p8amv")
+shader_parameter/burst_progress = 0.0
+shader_parameter/spread_strength = 0.010000000475
+shader_parameter/distortion_strength = 0.05
+shader_parameter/fade_start = 0.7
+
+[node name="Background" type="ColorRect" node_paths=PackedStringArray("logo")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_cmsy7")
+logo = NodePath("Logo")
+
+[node name="Logo" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_yjh10")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_x64hx")
+expand_mode = 2
+stretch_mode = 5

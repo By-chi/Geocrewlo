@@ -1,0 +1,96 @@
+[gd_scene load_steps=8 format=3 uid="uid://bviaos5j2kcs"]
+
+[ext_resource type="Script" uid="uid://c1dk07nfjm8oc" path="res://scene/Node2D/entity/entity.gd" id="1_5nauw"]
+[ext_resource type="Texture2D" uid="uid://c4pv2aleur70d" path="res://texture/main/entity.png" id="2_exvpm"]
+[ext_resource type="PackedScene" uid="uid://bh0vpfp41tpj2" path="res://scene/Gun/gun.tscn" id="3_lsagb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_exvpm"]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exvpm"]
+size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_exvpm"]
+resource_name = "sprint"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.02, 0.04, 0.06, 0.08, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"add_sprint_ghost"
+}, {
+"args": [],
+"method": &"add_sprint_ghost"
+}, {
+"args": [],
+"method": &"add_sprint_ghost"
+}, {
+"args": [],
+"method": &"add_sprint_ghost"
+}, {
+"args": [],
+"method": &"add_sprint_ghost"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lsagb"]
+_data = {
+&"sprint": SubResource("Animation_exvpm")
+}
+
+[node name="Entity" type="CharacterBody2D" node_paths=PackedStringArray("injury_area", "sprite", "animation", "camera", "sprint_cd_timer", "sprint_timer")]
+motion_mode = 1
+floor_block_on_wall = false
+platform_on_leave = 2
+platform_floor_layers = 0
+script = ExtResource("1_5nauw")
+injury_area = NodePath("Sprite2D/Area2D")
+sprite = NodePath("Sprite2D")
+animation = NodePath("AnimationPlayer")
+camera = NodePath("Camera2D")
+sprint_cd_timer = NodePath("Sprint_CD")
+sprint_timer = NodePath("Sprint")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_exvpm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_exvpm")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+scale = Vector2(0.25, 0.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("RectangleShape2D_exvpm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+zoom = Vector2(0.8, 0.8)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="Sprint_CD" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sprint" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lsagb")
+}
+
+[node name="Gun" parent="." instance=ExtResource("3_lsagb")]
+position = Vector2(32, 17)
+rotation = 4.712389
+scale = Vector2(2, 2)
+
+[connection signal="timeout" from="Sprint" to="." method="_on_sprint_timeout"]

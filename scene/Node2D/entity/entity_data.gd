@@ -1,0 +1,9 @@
+extends Node
+var health:=100.0
+var move_speed:=900.0
+var sprint_speed_rate:=7.0
+var rotational_acceleration:=0.000017
+var sprint_cd:=0.1#s
+var sprint_duration:=0.1#s
+var hand_strength:=300.0
+var heal_base_time:=6

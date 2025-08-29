@@ -1,0 +1,386 @@
+[gd_scene load_steps=26 format=3 uid="uid://b8innxkxfo2sx"]
+
+[ext_resource type="Script" uid="uid://clxy06nype25x" path="res://scene/Global.gd" id="1_xibyh"]
+[ext_resource type="Texture2D" uid="uid://e7u008ya4aqm" path="res://texture/ui/cursors_1.png" id="2_6a0yn"]
+[ext_resource type="Script" uid="uid://ba5kioe5rihnh" path="res://scene/menu.gd" id="2_c0jts"]
+[ext_resource type="Texture2D" uid="uid://c5l0ij3gnr1p0" path="res://texture/ui/bagpack.svg" id="2_j5yac"]
+[ext_resource type="Shader" uid="uid://ckrsmg57dbu7d" path="res://gdshader/invert_colors.gdshader" id="2_rcgv5"]
+[ext_resource type="Texture2D" uid="uid://cbbwfx1tji2el" path="res://texture/ui/quit.svg" id="3_c0jts"]
+[ext_resource type="Texture2D" uid="uid://rs7aayc2ho0y" path="res://texture/ui/set.svg" id="4_64uu7"]
+[ext_resource type="Texture2D" uid="uid://dhud7sw80aa6w" path="res://texture/ui/continue.svg" id="5_v4td8"]
+[ext_resource type="Shader" uid="uid://bhmq6nn50gl54" path="res://gdshader/vhs&crt.gdshader" id="7_c0jts"]
+[ext_resource type="Texture2D" uid="uid://dhi6r0x2440t7" path="res://texture/ui/back.svg" id="10_64uu7"]
+[ext_resource type="Texture2D" uid="uid://snj6h6le0nrt" path="res://texture/ui/save.svg" id="11_v4td8"]
+[ext_resource type="Environment" uid="uid://c58isjdl2cfek" path="res://environment.tres" id="12_tp8k6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08wy7"]
+shader = ExtResource("7_c0jts")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/pixelate = false
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.10000000149012
+shader_parameter/static_noise_intensity = 0.0050000002375
+shader_parameter/aberration = 0.01000002422500001
+shader_parameter/brightness = 1.2
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 2.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j5yac"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pegeu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64uu7"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4td8"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_left = 1
+border_width_top = 4
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v4td8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp8k6"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pegeu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yo74n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp8k6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1wjb5"]
+shader = ExtResource("2_rcgv5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcgv5"]
+shader = ExtResource("2_rcgv5")
+
+[sub_resource type="SphereMesh" id="SphereMesh_6a0yn"]
+radius = 4.0
+height = 8.0
+
+[node name="Global" type="CanvasLayer" node_paths=PackedStringArray("menu", "cursors")]
+process_mode = 3
+script = ExtResource("1_xibyh")
+menu = NodePath("CanvasLayer2/Menu")
+cursors = NodePath("CanvasLayer4/Cursors")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 999
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visibility_layer = 3
+z_index = 1000
+material = SubResource("ShaderMaterial_08wy7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("12_tp8k6")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Menu" type="ColorRect" parent="CanvasLayer2"]
+process_mode = 2
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.71800005)
+script = ExtResource("2_c0jts")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/Menu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -104.0
+offset_right = -100.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Bagpack" type="Button" parent="CanvasLayer2/Menu/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j5yac")
+icon = ExtResource("2_j5yac")
+flat = true
+
+[node name="Quit" type="Button" parent="CanvasLayer2/Menu/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j5yac")
+icon = ExtResource("3_c0jts")
+flat = true
+
+[node name="Set" type="Button" parent="CanvasLayer2/Menu/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j5yac")
+icon = ExtResource("4_64uu7")
+flat = true
+
+[node name="Continue" type="Button" parent="CanvasLayer2/Menu/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j5yac")
+icon = ExtResource("5_v4td8")
+flat = true
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Options" type="ColorRect" parent="CanvasLayer3"]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15590388, 0.1559039, 0.1559039, 1)
+
+[node name="Back" type="Button" parent="CanvasLayer3/Options"]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 71.0
+offset_right = 165.0
+offset_bottom = 121.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pegeu")
+icon = ExtResource("10_64uu7")
+flat = true
+expand_icon = true
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer3/Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 250.0
+offset_top = 200.0
+offset_right = -250.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_64uu7")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_64uu7")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_v4td8")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_v4td8")
+current_tab = 0
+
+[node name="显示" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "\"VHS&CRT\" 效果"
+
+[node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "\"辉光\" 效果"
+
+[node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "生成粒子"
+
+[node name="AI" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "AI 移动"
+
+[node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "AI 攻击"
+
+[node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "AI 闪避子弹"
+
+[node name="CheckButton4" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "AI 预瞄"
+
+[node name="CheckButton5" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+button_pressed = true
+text = "AI 追踪"
+
+[node name="玩家" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+text = "锁血"
+
+[node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+text = "秒杀"
+
+[node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+text = "透视"
+
+[node name="CheckButton4" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
+text = "无限子弹"
+
+[node name="按键绑定" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Save" type="Button" parent="CanvasLayer3/Options"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -172.0
+offset_top = -248.0
+offset_right = -122.0
+offset_bottom = -198.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tp8k6")
+icon = ExtResource("11_v4td8")
+flat = true
+expand_icon = true
+
+[node name="CanvasLayer4" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Cursors" type="Sprite2D" parent="CanvasLayer4"]
+z_index = 999
+material = SubResource("ShaderMaterial_1wjb5")
+position = Vector2(161, 176)
+texture = ExtResource("2_6a0yn")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="CanvasLayer4/Cursors"]
+material = SubResource("ShaderMaterial_rcgv5")
+mesh = SubResource("SphereMesh_6a0yn")
+
+[connection signal="pressed" from="CanvasLayer2/Menu/HBoxContainer/Bagpack" to="CanvasLayer2/Menu" method="_on_bagpack_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Menu/HBoxContainer/Quit" to="CanvasLayer2/Menu" method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Menu/HBoxContainer/Set" to="CanvasLayer2/Menu" method="_on_set_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Menu/HBoxContainer/Continue" to="CanvasLayer2/Menu" method="_on_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Options/Back" to="CanvasLayer3/Options" method="hide"]
+[connection signal="pressed" from="CanvasLayer3/Options/Save" to="." method="_on_save_pressed"]

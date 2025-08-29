@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjfe173ndidik"]
+
+[ext_resource type="Script" uid="uid://7g87meoy56be" path="res://scene/Bullet/bullet.gd" id="1_7k21s"]
+[ext_resource type="Texture2D" uid="uid://dkdna57uoyb3v" path="res://texture/main/bullet/normal.png" id="2_o8ju1"]
+[ext_resource type="AudioStream" uid="uid://d3s3eh3so8t2g" path="res://sound/buttel/BulletWhiz-by.mp3" id="3_f5xkj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f5xkj"]
+size = Vector2(186, 8)
+
+[node name="RayCast2D" type="RayCast2D" node_paths=PackedStringArray("head")]
+exclude_parent = false
+target_position = Vector2(600, 0)
+collide_with_areas = true
+script = ExtResource("1_7k21s")
+head = NodePath("Head")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(200, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("2_o8ju1")
+centered = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_f5xkj")
+max_distance = 1000.0
+parameters/looping = true
+
+[node name="Head" type="Area2D" parent="."]
+position = Vector2(500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+position = Vector2(-83, 0)
+shape = SubResource("RectangleShape2D_f5xkj")
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

@@ -1,0 +1,183 @@
+[gd_scene load_steps=16 format=3 uid="uid://bg1ht2uonotlr"]
+
+[ext_resource type="Script" uid="uid://cppedpidajl8k" path="res://scene/Node2D/main.gd" id="1_gpdt7"]
+[ext_resource type="Script" uid="uid://cuiiopq3bh7e4" path="res://scene/Node2D/GUI.gd" id="2_a1aga"]
+[ext_resource type="Script" uid="uid://bp8x2cxhtje6g" path="res://scene/Node2D/minimap.gd" id="2_vf0sl"]
+[ext_resource type="Shader" uid="uid://ckrsmg57dbu7d" path="res://gdshader/invert_colors.gdshader" id="4_nb5eh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cnw4c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vf0sl"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 2
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+anti_aliasing = false
+
+[sub_resource type="Gradient" id="Gradient_nb5eh"]
+colors = PackedColorArray(0.44511956, 0.4451195, 0.4451195, 1, 0.44705883, 0.44705883, 0.44705883, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i41st"]
+gradient = SubResource("Gradient_nb5eh")
+width = 1
+
+[sub_resource type="Gradient" id="Gradient_6enl1"]
+colors = PackedColorArray(0.8156863, 0.11764706, 0.16078432, 1, 0.8156863, 0.11764706, 0.16078432, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cnw4c"]
+gradient = SubResource("Gradient_6enl1")
+width = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i41st"]
+shader = ExtResource("4_nb5eh")
+
+[sub_resource type="Gradient" id="Gradient_v6icd"]
+offsets = PackedFloat32Array(0.22779922, 1)
+colors = PackedColorArray(0.11774104, 0.6807044, 1, 1, 0.26666668, 0.59607846, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ydary"]
+gradient = SubResource("Gradient_v6icd")
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_rfysf"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1.353256, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sdvoa"]
+gradient = SubResource("Gradient_rfysf")
+width = 1
+use_hdr = true
+
+[node name="Node2D" type="Node2D"]
+visibility_layer = 3
+material = SubResource("ShaderMaterial_cnw4c")
+script = ExtResource("1_gpdt7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_a1aga")
+
+[node name="Map" type="Panel" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.65500003)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = 350.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vf0sl")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Map/SubViewportContainer" node_paths=PackedStringArray("camera")]
+disable_3d = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+canvas_cull_mask = 4294967294
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+script = ExtResource("2_vf0sl")
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer/Map/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.02, 0.02)
+
+[node name="Lifebar" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -42.0
+offset_right = 250.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+step = 0.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_i41st")
+texture_progress = SubResource("GradientTexture1D_cnw4c")
+
+[node name="clip_capacity" type="Label" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_i41st")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -154.0
+offset_top = -69.0
+offset_right = -59.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "000/000"
+horizontal_alignment = 1
+
+[node name="score" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 20.0
+offset_right = 250.0
+offset_bottom = 56.0
+grow_horizontal = 2
+value = 43.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_ydary")
+texture_progress = SubResource("GradientTexture1D_sdvoa")
+
+[node name="Red" type="Label" parent="CanvasLayer/score"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 1.0
+offset_bottom = 11.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "0"
+
+[node name="Blue" type="Label" parent="CanvasLayer/score"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "0"

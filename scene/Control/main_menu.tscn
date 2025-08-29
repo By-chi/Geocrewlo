@@ -1,0 +1,177 @@
+[gd_scene load_steps=12 format=3 uid="uid://b2t27w1i0lyw3"]
+
+[ext_resource type="Script" uid="uid://5tc81qoriotl" path="res://scene/Control/main_menu.gd" id="1_2fwvj"]
+[ext_resource type="Shader" uid="uid://7fc6eb55g3em" path="res://gdshader/background.gdshader" id="1_3er1b"]
+[ext_resource type="Texture2D" uid="uid://bk3d2kbsy5erm" path="res://texture/logo/game_icon.svg" id="1_hxu56"]
+
+[sub_resource type="Gradient" id="Gradient_hxu56"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2fwvj"]
+gradient = SubResource("Gradient_hxu56")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0iwki"]
+shader = ExtResource("1_3er1b")
+shader_parameter/gradient = SubResource("GradientTexture2D_2fwvj")
+shader_parameter/circle_color = Color(0.10159916, 0.10159914, 0.10159916, 1)
+shader_parameter/circle_multiplier = 15.0
+shader_parameter/speed = 1.0
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/rotation = Transform2D(1, -1, 1, 1, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fwvj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.1, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.19607843)
+shadow_size = 3
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sepwh"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.1, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.19607843)
+shadow_size = 3
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ky83u"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.1, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.19607843)
+shadow_size = 3
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0iwki"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.1, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.19607843)
+shadow_size = 3
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by01r"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.1, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.19607843)
+shadow_size = 3
+shadow_offset = Vector2(10, 10)
+
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("background", "button_list")]
+script = ExtResource("1_2fwvj")
+background = NodePath("Background")
+button_list = NodePath("VBoxContainer")
+
+[node name="Logo" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hxu56")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0iwki")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.85200006
+anchor_right = 0.85200006
+anchor_bottom = 1.0
+offset_left = -163.50409
+offset_top = 123.0
+offset_right = 144.49591
+offset_bottom = -163.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 35
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_2fwvj")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_2fwvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2fwvj")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_2fwvj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sepwh")
+theme_override_styles/focus = SubResource("StyleBoxFlat_2fwvj")
+text = "开始"
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_ky83u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ky83u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ky83u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_ky83u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ky83u")
+theme_override_styles/focus = SubResource("StyleBoxFlat_2fwvj")
+text = "设置"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_0iwki")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0iwki")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0iwki")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0iwki")
+theme_override_styles/hover = SubResource("StyleBoxFlat_by01r")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0iwki")
+text = "退出"

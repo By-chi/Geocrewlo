@@ -1,0 +1,18 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1:1 透明背景（适配各类界面叠加，宽高严格对等） -->
+  <rect width="240" height="240" fill="none" stroke="none"/>
+  
+  <!-- 中间对战符号：柔和线条设计（避免锐利感） -->
+  <circle cx="120" cy="120" r="10" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="120" y1="92" x2="120" y2="148" stroke="#333" stroke-width="1.8" stroke-linecap="round"/>
+  
+  <!-- 左侧团队：3个圆角实心块（三角布局，圆角弱化棱角） -->
+  <rect x="58" y="98" width="26" height="26" rx="4.5" ry="4.5" fill="#333" stroke="none"/>
+  <rect x="38" y="130" width="26" height="26" rx="4.5" ry="4.5" fill="#333" stroke="none"/>
+  <rect x="78" y="130" width="26" height="26" rx="4.5" ry="4.5" fill="#333" stroke="none"/>
+  
+  <!-- 右侧团队：3个圆角描边块（对称布局，细线条增强柔和度） -->
+  <rect x="156" y="98" width="26" height="26" rx="4.5" ry="4.5" fill="white" stroke="#333" stroke-width="1.8"/>
+  <rect x="136" y="130" width="26" height="26" rx="4.5" ry="4.5" fill="white" stroke="#333" stroke-width="1.8"/>
+  <rect x="176" y="130" width="26" height="26" rx="4.5" ry="4.5" fill="white" stroke="#333" stroke-width="1.8"/>
+</svg>
