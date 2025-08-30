@@ -5,19 +5,19 @@ var player:Entity
 var camp_view:Array[Array]=[[],[]]
 @export var menu:ColorRect
 @export var cursors:Sprite2D
-func add_muzzle_particles(position:Vector2,particles_rotation:float)->void:
+
+const MUZZLE_PARTICLES = preload("res://scene/Node2D/muzzle_particles.tscn")
+const SPARK_PARTICLES = preload("res://scene/Node2D/spark_particles.tscn")
+func add_generic_particles(particles_scene: PackedScene, position: Vector2, _rotation: float, custom_scale: Vector2) -> void:
 	if !option_data["显示"]["生成粒子"]:
 		return
-	var particles:=preload("res://scene/Node2D/muzzle_particles.tscn").instantiate()
-	particles.global_position=position
-	particles.rotation=particles_rotation
-	particles.emitting=true
-	
-	particles.finished.connect(func():
-		particles.queue_free()
-	)
+	var particles = particles_scene.instantiate()
+	particles.global_position = position
+	particles.rotation = _rotation
+	particles.emitting = true
+	particles.finished.connect(func(): particles.queue_free())
 	game_main.add_child(particles)
-	particles.scale=Vector2(10,10)
+	particles.scale = custom_scale
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		cursors.position=event.position
@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	load_options()
+	randomize()
 func update_camp_view(id:int,camp:int)->void:
 	camp_view[camp][id]=false
 	for i in game_main.entity_list[camp]:

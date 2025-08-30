@@ -1,13 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://bh0vpfp41tpj2"]
 
 [ext_resource type="Script" uid="uid://iwbqt0xosp5t" path="res://scene/Gun/gun.gd" id="1_fvq6a"]
-[ext_resource type="Texture2D" uid="uid://dt8o7ntw8aqfo" path="res://texture/main/gun/34.png" id="2_jrkev"]
+[ext_resource type="Texture2D" uid="uid://dv23afrpqwavc" path="res://texture/main/gun/39.png" id="2_jrkev"]
 [ext_resource type="AudioStream" uid="uid://pk0363xxksg1" path="res://sound/gun/1.mp3" id="3_jrkev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fvq6a"]
 size = Vector2(22, 14)
 
 [node name="Gun" type="Area2D" node_paths=PackedStringArray("reload_timer", "audio_stream_player2d")]
+collision_mask = 3
 script = ExtResource("1_fvq6a")
 reload_timer = NodePath("Reload")
 audio_stream_player2d = NodePath("AudioStreamPlayer2D")

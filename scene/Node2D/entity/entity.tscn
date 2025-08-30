@@ -48,7 +48,7 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lsagb"]
 
-[node name="Entity" type="CharacterBody2D" node_paths=PackedStringArray("heal_timer", "audio_stream_player", "injury_area", "sprite", "rays", "view", "animation", "camera", "sprint_cd_timer", "sprint_timer", "direction_line")]
+[node name="Entity" type="CharacterBody2D" node_paths=PackedStringArray("heal_timer", "audio_stream_player", "injury_area", "sprite", "rays", "view", "name_label", "animation", "camera", "sprint_cd_timer", "sprint_timer", "gun", "direction_line")]
 visibility_layer = 3
 motion_mode = 1
 floor_block_on_wall = false
@@ -61,10 +61,12 @@ injury_area = NodePath("Sprite2D/Area2D")
 sprite = NodePath("Sprite2D")
 rays = NodePath("Rays")
 view = NodePath("View")
+name_label = NodePath("Name")
 animation = NodePath("AnimationPlayer")
 camera = NodePath("Camera2D")
 sprint_cd_timer = NodePath("Sprint_CD")
 sprint_timer = NodePath("Sprint")
+gun = NodePath("Gun")
 direction_line = NodePath("thumbnail/ColorRect")
 
 [node name="thumbnail" type="Sprite2D" parent="."]
@@ -90,6 +92,8 @@ texture = ExtResource("2_exvpm")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]
 scale = Vector2(0.25, 0.25)
+collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 shape = SubResource("RectangleShape2D_exvpm")
@@ -112,9 +116,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_lsagb")
 }
 
-[node name="Gun" parent="." instance=ExtResource("3_lsagb")]
+[node name="Gun" parent="." node_paths=PackedStringArray("host") instance=ExtResource("3_lsagb")]
 position = Vector2(32, 17)
 scale = Vector2(2, 2)
+host = NodePath("..")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = 10.0
@@ -123,13 +128,25 @@ max_polyphony = 10
 [node name="Rays" type="Node2D" parent="."]
 
 [node name="View" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="View"]
 shape = SubResource("RectangleShape2D_lsagb")
-debug_color = Color(0, 0.6, 0.69803923, 0)
+debug_color = Color(0, 0.60038817, 0.70000815, 0)
 
 [node name="heal" type="Timer" parent="."]
 one_shot = true
+
+[node name="Name" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.275)
+offset_left = -97.0
+offset_top = -177.0
+offset_right = 95.0
+offset_bottom = -81.0
+theme_override_font_sizes/font_size = 70
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="timeout" from="Sprint" to="." method="_on_sprint_timeout"]
 [connection signal="area_entered" from="View" to="." method="_on_view_area_entered_or_exited"]

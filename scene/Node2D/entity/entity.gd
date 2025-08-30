@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name Entity
 @export var heal_timer:Timer
+var last_gun:Gun
 var health:=EntityData.health
 func set_health(new_health:float,mastermind:Entity)->void:
 	if new_health<EntityData.health:
@@ -9,20 +10,37 @@ func set_health(new_health:float,mastermind:Entity)->void:
 		if is_player&&Global.option_data["玩家"]["锁血"]:
 			health=0
 			return
+		if gun!=null:
+			var gun_duplicate:=gun.duplicate()
+			gun_duplicate.global_position=gun.global_position
+			gun_duplicate.host=null
+			if last_gun!=null&&last_gun.host==null:
+				last_gun.queue_free()
+			last_gun=gun_duplicate
+			gun_duplicate.id=gun.id
+			Global.game_main.add_child(gun_duplicate)
 		GameData.camp_score[camp-1]+=1
 		GameData.score[mastermind.camp][mastermind.id]+=1
+		GameData.mortality_database[camp][id]+=1
+		GameData.add_elimination_announcement(mastermind,self)
 		if mastermind.is_player:
-			audio_stream_player.stream=load("res://sound/entity/kill_"+str(randi()%4)+".mp3")
+			if mastermind.camp!=camp:
+				audio_stream_player.stream=load("res://sound/entity/kill_"+str(randi()%4)+".mp3")
+				
+			else:
+				audio_stream_player.stream=preload("res://sound/entity/manslaughter.mp3")
 			audio_stream_player.play()
 		match Global.init_args["Mode"]:
 			0:
 				var playstarts:Array=Global.game_main.playstarts[camp]
 				position=playstarts[randi()%playstarts.size()]
-				gun.id=randi()%GunData.names.size()
+				if gun!=null:
+					gun.id=randi()%GunData.names.size()
 				new_health=EntityData.health
 			1:
 				position=Global.game_main.entity_list[camp][id-randi()%Global.game_main.entity_list[camp].size()].position+Vector2(1,1)
-				gun.id=randi()%GunData.names.size()
+				if gun!=null:
+					gun.id=randi()%GunData.names.size()
 				new_health=EntityData.health
 			2:
 				set_physics_process(false)
@@ -33,12 +51,14 @@ func set_health(new_health:float,mastermind:Entity)->void:
 			set("destination",get("map").empty_tiles[randi()%get("map").empty_tiles.size()])
 			set("move_name","Take a casual stroll")
 			set("is_pathfinding",true)
+		
 	health=new_health
 @export var audio_stream_player:AudioStreamPlayer
 @export var injury_area:Area2D
 @export var sprite:Sprite2D
 @export var rays:Node2D
 @export var view:Area2D
+@export var name_label:Label
 var id:int
 var move_speed:=EntityData.move_speed
 var sprint_speed_rate:=EntityData.sprint_speed_rate
@@ -97,8 +117,26 @@ func _physics_process(delta: float) -> void:
 	velocity=move_velocity
 	move_and_slide()
 
-
-
+func drop_gun()->void:
+	if gun!=null:
+		var pos:=gun.global_position
+		remove_child(gun)
+		gun.global_position=pos
+		gun.host=null
+		Global.game_main.add_child(gun)
+		gun=null
+func pick_up_gun()->void:
+	if gun==null:
+		for i in injury_area.get_overlapping_areas():
+			if i is Gun:
+				var pos:=i.global_position
+				Global.game_main.remove_child(i)
+				i.host=self
+				gun=i
+				add_child(i)
+				i.global_position=pos
+				break
+		
 @export var sprint_cd_timer:Timer
 @export var sprint_timer:Timer
 var sprint_cd:=EntityData.sprint_cd
@@ -110,7 +148,7 @@ func sprint()->void:
 	sprint_timer.start(sprint_duration)
 	speed=move_speed*sprint_speed_rate
 	animation.play("sprint")
-var gun:Area2D
+@export var gun:Gun
 func move() -> void:
 	pass
 func is_facing_right() -> bool:

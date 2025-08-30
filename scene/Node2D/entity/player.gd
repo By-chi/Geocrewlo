@@ -13,7 +13,6 @@ func resize_view()->void:
 			j.view.get_node("CollisionShape2D").shape.size=Vector2(get_window().size)/camera.zoom
 func rotate_gun()->void:
 	gun.look_at(get_global_mouse_position())
-	#gun.rotation=lerpf((get_global_mouse_position()-gun.global_position).angle(),gun.rotation,0.9)
 	super.rotate_gun()
 	direction_line.rotation=gun.rotation
 var aim_move_sensitivity:=2.5
@@ -37,10 +36,14 @@ func _process(delta: float) -> void:
 		shoot()
 	if Input.is_action_just_pressed("冲刺"):
 			sprint()
-	elif Input.is_action_just_pressed("换弹"):
+	elif Input.is_action_just_pressed("换弹")&&gun!=null:
 		gun.reload()
 	elif Input.is_action_just_pressed("瞄准"):
 		aiming=!aiming
+	elif Input.is_action_just_pressed("丢弃"):
+		drop_gun()
+	elif Input.is_action_just_pressed("拾取"):
+		pick_up_gun()
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 func move() -> void:

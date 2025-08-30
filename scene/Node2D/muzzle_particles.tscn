@@ -5,6 +5,7 @@ colors = PackedColorArray(18.892157, 18.892157, 18.892157, 1, 1, 0.91627353, 0.5
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_b4ltk"]
 gradient = SubResource("Gradient_mfllk")
+use_hdr = true
 
 [sub_resource type="Curve" id="Curve_b4ltk"]
 _data = [Vector2(0, 0.33594233), 0.0, 0.0, 0, 0, Vector2(0.678, 1), 0.0, 0.0, 0, 0]

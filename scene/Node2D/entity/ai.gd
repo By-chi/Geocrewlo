@@ -1,123 +1,3 @@
-#extends Entity
-####################################旧版####################################
-#var map:TileMapLayer
-#
-#
-##region test
-##region
-#var target_entity
-#var target_position:=Vector2.ZERO
-#func get_optimized_aim_point(a_pos: Vector2, b_pos: Vector2, a_move_v: Vector2, bullet_speed: float) -> Vector2:
-	#return a_pos + a_move_v * (a_pos - b_pos).length() / bullet_speed
-	#
-#func _process(delta: float) -> void:
-	#super._process(delta)
-	#if Engine.get_physics_frames()%2==0:
-		#var old=target_entity
-		#target_entity=null
-		#for i in Global.camp_view[camp].size():
-			#if Global.camp_view[camp][i]&&no_obstruction[i]:
-				#target_entity=Global.game_main.entity_list[camp-1][i]
-				#if target_entity.is_dead:
-					#target_entity=null
-					#continue
-				#if Global.init_args["AI_Level"]>=6:
-					#target_position=get_optimized_aim_point(
-						#target_entity.global_position,
-						#global_position,
-						#target_entity.velocity,
-						#GunData.bullet_speeds[gun.id]
-					#)
-				#else:
-					#target_position=target_entity.global_position
-				#
-				#break
-		#if target_entity==null&&old!=null&&Global.init_args["AI_Level"]>=4:
-			#if target_position!=Vector2.ZERO&&move_name!="Track the enemy":
-				#destination=map.local_to_map(map.to_local(target_position))
-				#move_name="Track the enemy"
-	#if target_entity!=null:
-		#shoot()
-		#pass
-	#else:
-		#gun.reload()
-#var move_name:="Free"
-#func shoot()->void:
-	#super.shoot()
-	#if gun.clip_capacity==0:
-		#gun.reload()
-#func rotate_gun()->void:
-	#if target_entity==null:
-		#return
-	#gun.look_at(target_position)
-	##gun.rotation=move_toward(gun.rotation,(target_position-global_position).angle(),6*get_physics_process_delta_time())
-	#super.rotate_gun()
-#var dodge_area:Area2D
-#func init() -> void:
-	#camera.enabled=false
-	#is_player=false
-	#sprite.self_modulate=self_modulate
-	#map=Global.game_main.map
-	#destination=map.empty_tiles[randi()%map.empty_tiles.size()]
-	#move_name="Take a casual stroll"
-	#is_pathfinding=true
-	#dodge_area=Area2D.new()
-	#var collision_shape:=CollisionShape2D.new()
-	#collision_shape.shape=CircleShape2D.new()
-	#collision_shape.shape.radius=min(Global.init_args["AI_Level"]*50,400)
-	#dodge_area.area_entered.connect(on_area_entered_dodge_area)
-	#dodge_area.add_child(collision_shape)
-	#add_child(dodge_area)
-	#sprint_timer.timeout.connect(func():
-		#is_pathfinding=true
-		#)
-		#
-#func on_area_entered_dodge_area(area: Area2D)->void:
-	#var bullet:=area.get_parent()
-	#if bullet.is_class("RayCast2D")&&bullet.host!=self:
-		#var ab: Vector2 = position - bullet.position
-		#var dot_ab_mv: float = ab.dot(bullet.move)
-		#var mv_length_squared: float = bullet.move.length_squared()
-		#var ab_parallel: Vector2 = (dot_ab_mv / mv_length_squared) * bullet.move
-		#sprint_base_move = (ab - ab_parallel).normalized()*move_speed
-		#move_velocity=sprint_base_move
-		#sprint()
-		#destination=map.empty_tiles[randi()%map.empty_tiles.size()]
-		#move_name="Take a casual stroll"
-		##is_pathfinding=false
-#func move()->void:
-	#super.move()
-	#if is_pathfinding:
-		#if !path.is_empty():
-			#var direction:Vector2=map.map_to_local(path[0])*map.scale-position
-			#move_velocity=direction.normalized()*speed
-			#if direction.length_squared()<=1024:
-				#path.remove_at(0)
-			#
-		#else:
-			##is_pathfinding=false
-			#destination=map.empty_tiles[randi()%map.empty_tiles.size()]
-			#move_name="Take a casual stroll"
-#var is_pathfinding:=false
-#func _get_pos_on_map()->Vector2i:
-	#return map.local_to_map(map.to_local(global_position))
-##var line:Line2D
-#var destination:Vector2:
-	#set(value):
-		#if !map.astar.is_in_boundsv(value):
-			#value=map.empty_tiles[randi()%map.empty_tiles.size()]
-			#move_name="Take a casual stroll"
-		#destination=value
-		#
-		#path=map.astar.get_point_path(_get_pos_on_map(),destination)
-		##if line!=null:
-			##line.queue_free()
-		##line=Line2D.new()
-		##line.points=path
-		##line.scale=map.scale
-		##line.width=0.2
-		##Global.game_main.add_child(line)
-#var path:PackedVector2Array
 extends Entity
 var map:TileMapLayer
 
@@ -155,7 +35,7 @@ func _process(delta: float) -> void:
 					
 				
 				# 更新目标位置
-				if Global.init_args["AI_Level"] >= 6:
+				if Global.init_args["AI_Level"] >= 6&&gun!=null:
 					target_position = get_optimized_aim_point(
 						aim_pos,
 						global_position,
@@ -199,7 +79,7 @@ func _process(delta: float) -> void:
 	if target_entity != null:
 		if Global.option_data["AI"]["AI 攻击"]:
 			shoot()
-	else:
+	elif gun!=null:
 		gun.reload()
 
 var move_name:="Free"
@@ -236,6 +116,8 @@ func init() -> void:
 	collision_shape.shape.radius = min(Global.init_args["AI_Level"]*50, 400)
 	dodge_area.area_entered.connect(on_area_entered_dodge_area)
 	dodge_area.add_child(collision_shape)
+	#dodge_area.set_collision_mask_value(0,false)
+	#dodge_area.set_collision_mask_value(1,true)
 	add_child(dodge_area)
 	sprint_timer.timeout.connect(func():
 		is_pathfinding = true
@@ -246,6 +128,8 @@ func on_area_entered_dodge_area(area: Area2D)->void:
 		return
 	var bullet := area.get_parent()
 	if bullet.is_class("RayCast2D") && bullet.host != self:
+		if !Global.option_data["全局"]["友伤"]&&camp==bullet.host.camp:
+			return
 		var ab: Vector2 = position - bullet.position
 		var dot_ab_mv: float = ab.dot(bullet.move)
 		var mv_length_squared: float = bullet.move.length_squared()
@@ -263,7 +147,7 @@ func move()->void:
 		if !path.is_empty():
 			var direction:Vector2 = map.map_to_local(path[0])*map.scale - position
 			move_velocity = direction.normalized() * speed
-			if direction.length_squared() <= 1024:
+			if direction.length_squared() <= 2048:
 				path.remove_at(0)
 		else:
 			#is_pathfinding=false

@@ -207,10 +207,9 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_64uu7")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_64uu7")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_v4td8")
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_v4td8")
-current_tab = 1
+current_tab = 0
 
 [node name="显示" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -244,25 +243,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "生成粒子"
 
-[node name="全局" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/全局"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
-button_pressed = true
-text = "友伤"
-
 [node name="AI" type="VBoxContainer" parent="CanvasLayer3/Options/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-metadata/_tab_index = 2
+metadata/_tab_index = 1
 
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
@@ -318,7 +303,7 @@ text = "AI 追踪"
 visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-metadata/_tab_index = 3
+metadata/_tab_index = 2
 
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
 layout_mode = 2
@@ -360,7 +345,7 @@ text = "无限子弹"
 visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-metadata/_tab_index = 4
+metadata/_tab_index = 3
 
 [node name="Save" type="Button" parent="CanvasLayer3/Options"]
 layout_mode = 1
