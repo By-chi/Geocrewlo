@@ -1,0 +1,186 @@
+[gd_scene load_steps=9 format=3 uid="uid://ov0umtgjleka"]
+
+[ext_resource type="Texture2D" uid="uid://dhud7sw80aa6w" path="res://texture/ui/continue.svg" id="1_oriet"]
+[ext_resource type="Script" uid="uid://c4a3hhwinas0h" path="res://scene/Control/bagpack.gd" id="1_q2ors"]
+[ext_resource type="Texture2D" uid="uid://dheovx7ypd7od" path="res://texture/main/gun/13.png" id="2_58hu5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2ors"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58hu5"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.95686275, 0.9607843, 0.96862745, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0rs0"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.09985284, 0.09985284, 0.09985284, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kc5w5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8rad"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.18461496, 0.18461496, 0.18461496, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+
+[node name="Control" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q2ors")
+
+[node name="Left" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.28580728
+anchor_bottom = 1.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q2ors")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Left"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 45.0
+offset_right = -45.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Left/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Right" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28580728
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_58hu5")
+metadata/_edit_use_anchors_ = true
+
+[node name="Name" type="Label" parent="Right"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 66.0
+offset_right = 218.0
+offset_bottom = 149.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+text = "Name"
+
+[node name="Show" type="Panel" parent="Right"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -300.0
+offset_right = 350.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i0rs0")
+
+[node name="TextureRect" type="TextureRect" parent="Right/Show"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_58hu5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Equip" type="Button" parent="Right"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -147.0
+offset_right = 54.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_kc5w5")
+text = "下次复活装备"
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -123.0
+offset_top = 65.0
+offset_right = -63.0
+offset_bottom = 125.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_l8rad")
+icon = ExtResource("1_oriet")
+expand_icon = true
+
+[connection signal="pressed" from="Right/Equip" to="." method="_on_equip_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

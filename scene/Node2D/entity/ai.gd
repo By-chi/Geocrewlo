@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		# 检测潜在目标
 		for i in Global.camp_view[camp].size():
 			if Global.camp_view[camp][i] && no_obstruction[i]:
-				var potential_target = Global.game_main.entity_list[camp-1][i]
+				var potential_target = Global.entity_list[camp-1][i]
 				if potential_target.is_dead:
 					continue
 				
@@ -140,7 +140,12 @@ func on_area_entered_dodge_area(area: Area2D)->void:
 		destination = map.empty_tiles[randi()%map.empty_tiles.size()]
 		move_name = "Take a casual stroll"
 		#is_pathfinding=false
-
+func rebirth()->void:
+	if gun!=null:
+		gun.id=randi()%GunData.names.size()
+	destination=map.empty_tiles[randi()%map.empty_tiles.size()]
+	move_name="Take a casual stroll"
+	is_pathfinding=true
 func move()->void:
 	super.move()
 	if is_pathfinding:

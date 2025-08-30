@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dhud7sw80aa6w" path="res://texture/ui/continue.svg" id="5_v4td8"]
 [ext_resource type="Shader" uid="uid://bhmq6nn50gl54" path="res://gdshader/vhs&crt.gdshader" id="7_c0jts"]
 [ext_resource type="Texture2D" uid="uid://dhi6r0x2440t7" path="res://texture/ui/back.svg" id="10_64uu7"]
+[ext_resource type="StyleBox" uid="uid://bd0v6u5nt654a" path="res://scene/Control/button_normal.stylebox" id="10_yo74n"]
+[ext_resource type="StyleBox" uid="uid://b00acmycs1h8b" path="res://scene/Control/button_hover.stylebox" id="11_oa513"]
 [ext_resource type="Texture2D" uid="uid://snj6h6le0nrt" path="res://texture/ui/save.svg" id="11_v4td8"]
 [ext_resource type="Environment" uid="uid://c58isjdl2cfek" path="res://environment.tres" id="12_tp8k6"]
 
@@ -71,11 +73,6 @@ corner_radius_bottom_left = 8
 corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v4td8"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp8k6"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pegeu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yo74n"]
 
@@ -217,9 +214,9 @@ metadata/_tab_index = 0
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "\"VHS&CRT\" 效果"
@@ -227,9 +224,9 @@ text = "\"VHS&CRT\" 效果"
 [node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "\"辉光\" 效果"
@@ -237,9 +234,9 @@ text = "\"辉光\" 效果"
 [node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "生成粒子"
@@ -251,9 +248,9 @@ metadata/_tab_index = 1
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/全局"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "友伤"
@@ -267,9 +264,9 @@ metadata/_tab_index = 2
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "AI 移动"
@@ -277,9 +274,9 @@ text = "AI 移动"
 [node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "AI 攻击"
@@ -287,9 +284,9 @@ text = "AI 攻击"
 [node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "AI 闪避子弹"
@@ -297,9 +294,9 @@ text = "AI 闪避子弹"
 [node name="CheckButton4" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "AI 预瞄"
@@ -307,9 +304,9 @@ text = "AI 预瞄"
 [node name="CheckButton5" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/AI"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 button_pressed = true
 text = "AI 追踪"
@@ -323,36 +320,36 @@ metadata/_tab_index = 3
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 text = "锁血"
 
 [node name="CheckButton2" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 text = "秒杀"
 
 [node name="CheckButton3" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 text = "透视"
 
 [node name="CheckButton4" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/玩家"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_tp8k6")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pegeu")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pegeu")
+theme_override_styles/normal = ExtResource("10_yo74n")
+theme_override_styles/hover = ExtResource("11_oa513")
+theme_override_styles/hover_pressed = ExtResource("11_oa513")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
 text = "无限子弹"
 

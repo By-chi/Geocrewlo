@@ -1,7 +1,7 @@
 extends Node2D
 var arg: Dictionary
 var map: TileMapLayer
-var entity_list: Array[Array]
+
 var playstarts: Array[Array]
 @export var UI:CanvasLayer
 
@@ -17,6 +17,10 @@ func _ready() -> void:
 	map = load("res://scene/Map/" + MapData.names[arg["Map"]] + ".tscn").instantiate()
 	add_child(map)
 	var half_population := int(arg["Population"]) / 2
+	if arg["Mode"]==0||arg["Mode"]==1:
+		GameData.target_score=100
+	elif arg["Mode"]==2:
+		GameData.target_score=half_population
 	Global.camp_view[0].resize(half_population)
 	Global.camp_view[0].fill(false)
 	Global.camp_view[1].resize(half_population)
@@ -34,7 +38,7 @@ func _ready() -> void:
 	var player_id := randi() % half_population
 	var player_camp := randi() % 2
 	for i in MapData.start_location[arg["Map"]].size():
-		entity_list.append([])
+		Global.entity_list.append([])
 		playstarts.append([])
 		for j in half_population:
 			var x := lerpf(
@@ -49,9 +53,9 @@ func _ready() -> void:
 			)
 			var entity := preload("res://scene/Node2D/entity/entity.tscn").instantiate()
 			entity.position = Vector2(x, y)
-			entity_list[i].append(entity)
+			Global.entity_list[i].append(entity)
 			playstarts[i].append(Vector2(x, y))
-			if entity_list[i].size() - 1 == player_id && i == player_camp:
+			if Global.entity_list[i].size() - 1 == player_id && i == player_camp:
 				entity.is_player = true
 				Global.player = entity
 
@@ -61,12 +65,13 @@ func _ready() -> void:
 				entity.camp = 1
 			entity.id = j
 			add_child(entity)
-			entity.name_label.text="p"+str((i+1)*(j+1)).pad_zeros(2)
+			entity.name_label.text="p"+str(i)+str(j)
 	for i in half_population:
 		for j in half_population:
 			var ray := preload("res://scene/Node2D/ray.tscn").instantiate()
-			ray.from = entity_list[0][i]
-			ray.to = entity_list[1][j]
-			ray.add_exception(entity_list[0][i])
-			ray.add_exception(entity_list[1][j])
-			entity_list[0][i].rays.add_child(ray)
+			ray.from = Global.entity_list[0][i]
+			ray.to = Global.entity_list[1][j]
+			ray.add_exception(Global.entity_list[0][i])
+			ray.add_exception(Global.entity_list[1][j])
+			Global.entity_list[0][i].rays.add_child(ray)
+	

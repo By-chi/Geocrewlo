@@ -1,17 +1,18 @@
 extends Area2D
 class_name Gun
 @export var host:Entity
-var ammunition_capacity:int
+var ammunition_capacity:=0
 var clip_capacity:int
 @export var reload_timer:Timer
-var id:=2:
+var id:=1:
 	set(value):
 		id=value
 		$Sprite2D.texture=GunData.textures[id]
 		$CollisionShape2D.shape.size=$Sprite2D.texture.get_size()
 		spread_angle=GunData.base_spread_angle[id]
-		ammunition_capacity=GunData.initial_ammunition_capacity[id]
-		clip_capacity=GunData.clip_max_capacity[id]
+		if ammunition_capacity==0:
+			ammunition_capacity=GunData.initial_ammunition_capacity[id]
+			clip_capacity=GunData.clip_max_capacity[id]
 		reload_timer.wait_time=GunData.reload_time[id]
 var spread_angle:float
 func _ready() -> void:
@@ -53,7 +54,11 @@ func shoot()->void:
 				clip_capacity-=1
 			reload_timer.stop()
 			spread_angle+=GunData.burst_spread_increment[id]
-			last_shoot_time=Time.get_ticks_msec()
+			var rollback:=GunData.shoot_cds[id]-interval
+			if rollback>-GunData.shoot_cds[id]:
+				last_shoot_time=Time.get_ticks_msec()+rollback
+			else:
+				last_shoot_time=Time.get_ticks_msec()
 		else:
 			if reload_timer.is_stopped() && host != null && !host.audio_stream_player.playing:  # 增加host查空
 				if host.is_player:

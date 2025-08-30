@@ -29,7 +29,7 @@ const handheld_positions:PackedVector2Array=[
 	Vector2(35,20),
 ]
 #ms 射速间隔（数值越小射速越快）
-const shoot_cds:PackedFloat32Array=[
+const shoot_cds:PackedInt32Array=[
 	600,
 	110,
 	1900,

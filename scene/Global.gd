@@ -2,10 +2,31 @@ extends CanvasLayer
 var init_args:Dictionary
 var game_main:Node2D
 var player:Entity
+var entity_list: Array[Array]
 var camp_view:Array[Array]=[[],[]]
 @export var menu:ColorRect
 @export var cursors:Sprite2D
-
+var is_over:=false
+func game_over()->void:
+	is_over=true
+	Engine.time_scale=0.1
+	var winner:int
+	if GameData.camp_score[0]>=GameData.camp_score[1]:
+		winner=0
+	else:
+		winner=1
+	if winner==player.camp:
+		player.audio_stream_player.stream=preload("res://sound/win.mp3")
+	else:
+		player.audio_stream_player.stream=preload("res://sound/losing.mp3")
+	player.audio_stream_player.stop()
+	player.audio_stream_player.play()
+	await get_tree().create_timer(0.6).timeout
+	Engine.time_scale=1
+	for i in entity_list:
+		for j in i:
+			game_main.remove_child(j)
+	get_tree().change_scene_to_file("res://scene/Control/settlement_menu.tscn")
 const MUZZLE_PARTICLES = preload("res://scene/Node2D/muzzle_particles.tscn")
 const SPARK_PARTICLES = preload("res://scene/Node2D/spark_particles.tscn")
 func add_generic_particles(particles_scene: PackedScene, position: Vector2, _rotation: float, custom_scale: Vector2) -> void:
@@ -33,12 +54,12 @@ func _ready() -> void:
 	randomize()
 func update_camp_view(id:int,camp:int)->void:
 	camp_view[camp][id]=false
-	for i in game_main.entity_list[camp]:
+	for i in entity_list[camp]:
 		if i.visible_entity[id]:
 			camp_view[camp][id]=true
 			break
 	if camp==player.camp&&!Global.option_data["玩家"]["透视"]:
-		game_main.entity_list[camp-1][id].visible=camp_view[camp][id]
+		entity_list[camp-1][id].visible=camp_view[camp][id]
 
 func set_script_save_properties(node:Node,script:Script)->void:
 	save_all_properties(node)

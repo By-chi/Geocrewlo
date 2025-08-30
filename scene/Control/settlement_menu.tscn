@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=3 uid="uid://ck20por83kvft"]
+
+[ext_resource type="Script" uid="uid://dxdlg3y58ml8c" path="res://scene/Control/settlement_menu.gd" id="1_rtcew"]
+[ext_resource type="Texture2D" uid="uid://dvw1rqfr1be3v" path="res://texture/ui/VS.png" id="2_e8txp"]
+[ext_resource type="Texture2D" uid="uid://dhud7sw80aa6w" path="res://texture/ui/continue.svg" id="3_e8txp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtcew"]
+bg_color = Color(0.0540758, 0.053921532, 0.052546456, 1)
+border_width_right = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8txp"]
+bg_color = Color(0.0540758, 0.053921532, 0.052546456, 1)
+border_width_left = 1
+
+[node name="Control" type="Control" node_paths=PackedStringArray("red_rect", "blue_rect")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rtcew")
+red_rect = NodePath("Red")
+blue_rect = NodePath("Blue")
+
+[node name="Red" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+offset_top = 60.0
+offset_bottom = 140.0
+color = Color(0.27049974, 2.8427226e-07, 4.813075e-08, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Blue" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 140.0
+color = Color(0, 0.18704954, 0.34364974, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 45.0
+offset_right = 60.0
+offset_bottom = 165.0
+grow_horizontal = 2
+texture = ExtResource("2_e8txp")
+expand_mode = 1
+
+[node name="Red2" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 150.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rtcew")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Red2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Blue2" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 150.0
+offset_right = -50.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e8txp")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Blue2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Back" type="Button" parent="."]
+z_index = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 64.0
+offset_right = -130.0
+offset_bottom = 134.0
+grow_horizontal = 0
+icon = ExtResource("3_e8txp")
+flat = true
+expand_icon = true
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

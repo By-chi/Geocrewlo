@@ -2,8 +2,8 @@ extends ColorRect
 
 
 func _on_bagpack_pressed() -> void:
-	pass # Replace with function body.
-
+	var bagpack:=preload("res://scene/Control/bagpack.tscn").instantiate()
+	$"../../CanvasLayer3".add_child(bagpack)
 
 func _on_quit_pressed() -> void:
 	hide()

@@ -3,6 +3,8 @@ class_name Entity
 @export var heal_timer:Timer
 var last_gun:Gun
 var health:=EntityData.health
+func rebirth()->void:
+	pass
 func set_health(new_health:float,mastermind:Entity)->void:
 	if new_health<EntityData.health:
 		heal_timer.start((EntityData.health-new_health)*0.01*EntityData.heal_base_time)
@@ -26,7 +28,6 @@ func set_health(new_health:float,mastermind:Entity)->void:
 		if mastermind.is_player:
 			if mastermind.camp!=camp:
 				audio_stream_player.stream=load("res://sound/entity/kill_"+str(randi()%4)+".mp3")
-				
 			else:
 				audio_stream_player.stream=preload("res://sound/entity/manslaughter.mp3")
 			audio_stream_player.play()
@@ -34,24 +35,16 @@ func set_health(new_health:float,mastermind:Entity)->void:
 			0:
 				var playstarts:Array=Global.game_main.playstarts[camp]
 				position=playstarts[randi()%playstarts.size()]
-				if gun!=null:
-					gun.id=randi()%GunData.names.size()
 				new_health=EntityData.health
 			1:
-				position=Global.game_main.entity_list[camp][id-randi()%Global.game_main.entity_list[camp].size()].position+Vector2(1,1)
-				if gun!=null:
-					gun.id=randi()%GunData.names.size()
+				position=Global.entity_list[camp][id-randi()%Global.entity_list[camp].size()].position+Vector2(1,1)
 				new_health=EntityData.health
 			2:
 				set_physics_process(false)
 				set_process(false)
 				is_dead=true
 				position=Vector2(114514,114514)
-		if !is_player:
-			set("destination",get("map").empty_tiles[randi()%get("map").empty_tiles.size()])
-			set("move_name","Take a casual stroll")
-			set("is_pathfinding",true)
-		
+		rebirth()
 	health=new_health
 @export var audio_stream_player:AudioStreamPlayer
 @export var injury_area:Area2D
@@ -76,7 +69,7 @@ var move_velocity:=Vector2.ZERO
 func _input(event: InputEvent) -> void:
 	pass
 func shoot()->void:
-	if gun==null:
+	if gun==null||Global.is_over:
 		return
 	gun.shoot()
 func _ready() -> void:
@@ -191,7 +184,7 @@ func update_visible_entity(index:int)->void:
 	visible_entity[index]=visible_value
 	Global.update_camp_view(index,camp)
 func no_obstruction_sync(self_index:int,sync_index:int)->void:
-	var to:Entity=Global.game_main.entity_list[1][sync_index]
+	var to:Entity=Global.entity_list[1][sync_index]
 	to.no_obstruction[self_index]=no_obstruction[sync_index]
 	to.update_visible_entity(self_index)
 func _on_view_area_entered_or_exited(area:  Area2D,is_add:=true) -> void:

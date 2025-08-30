@@ -1,4 +1,5 @@
 extends Node
+var target_score:=0
 var camp_score:Array[int]
 var score:Array[Array]
 var mortality_database:Array[Array]
@@ -34,4 +35,3 @@ func add_elimination_announcement(p1:Entity,p2:Entity)->void:
 	Global.game_main.UI.elimination_aannouncement.add_child(rich)
 	if Global.game_main.UI.elimination_aannouncement.get_child_count()>10:
 		Global.game_main.UI.elimination_aannouncement.get_child(0).queue_free()
-	

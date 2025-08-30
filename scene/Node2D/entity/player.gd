@@ -1,5 +1,5 @@
 extends Entity
-
+var replacement_gun_id:=-1
 func init() -> void:
 	camera.enabled=true
 	is_player=true
@@ -7,8 +7,11 @@ func init() -> void:
 	resize_view()
 	get_viewport().size_changed.connect(resize_view)
 	direction_line.visible=true
+func rebirth()->void:
+	if replacement_gun_id!=-1&&gun!=null:
+		gun.id=replacement_gun_id
 func resize_view()->void:
-	for i in Global.game_main.entity_list:
+	for i in Global.entity_list:
 		for j in i:
 			j.view.get_node("CollisionShape2D").shape.size=Vector2(get_window().size)/camera.zoom
 func rotate_gun()->void:
