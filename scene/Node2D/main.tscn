@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bg1ht2uonotlr"]
+[gd_scene load_steps=19 format=3 uid="uid://bg1ht2uonotlr"]
 
 [ext_resource type="Script" uid="uid://cppedpidajl8k" path="res://scene/Node2D/main.gd" id="1_gpdt7"]
 [ext_resource type="Script" uid="uid://cuiiopq3bh7e4" path="res://scene/Node2D/GUI.gd" id="2_a1aga"]
 [ext_resource type="Script" uid="uid://bp8x2cxhtje6g" path="res://scene/Node2D/minimap.gd" id="2_vf0sl"]
+[ext_resource type="Script" uid="uid://b5i11eiwy2xo3" path="res://scene/Gun/gun_data.gd" id="4_i41st"]
 [ext_resource type="Shader" uid="uid://ckrsmg57dbu7d" path="res://gdshader/invert_colors.gdshader" id="4_nb5eh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnw4c"]
@@ -63,6 +64,9 @@ gradient = SubResource("Gradient_rfysf")
 width = 1
 use_hdr = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6enl1"]
+shader = ExtResource("4_nb5eh")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nb5eh"]
 shader = ExtResource("4_nb5eh")
 
@@ -72,14 +76,16 @@ material = SubResource("ShaderMaterial_cnw4c")
 script = ExtResource("1_gpdt7")
 UI = NodePath("UI")
 
-[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("lifebar", "score", "score_red", "score_blue", "clip_capacity", "Kd", "elimination_aannouncement")]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("lifebar", "score", "score_red", "score_blue", "score_time", "clip_capacity", "Kd", "Fps", "elimination_aannouncement")]
 script = ExtResource("2_a1aga")
 lifebar = NodePath("Lifebar")
 score = NodePath("score")
 score_red = NodePath("score/Red")
 score_blue = NodePath("score/Blue")
+score_time = NodePath("score/Time")
 clip_capacity = NodePath("clip_capacity")
 Kd = NodePath("KD")
+Fps = NodePath("Fps")
 elimination_aannouncement = NodePath("EliminationAnnouncement")
 
 [node name="Map" type="Panel" parent="UI"]
@@ -116,6 +122,9 @@ camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="UI/Map/SubViewportContainer/SubViewport"]
 zoom = Vector2(0.02, 0.02)
+
+[node name="GunData" type="Node" parent="UI/Map"]
+script = ExtResource("4_i41st")
 
 [node name="Lifebar" type="TextureProgressBar" parent="UI"]
 anchors_preset = 7
@@ -194,6 +203,24 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "0"
 
+[node name="Time" type="Label" parent="UI/score"]
+material = SubResource("ShaderMaterial_6enl1")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -8.0
+offset_right = 34.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "000"
+horizontal_alignment = 1
+
 [node name="KD" type="Label" parent="UI"]
 material = SubResource("ShaderMaterial_nb5eh")
 anchors_preset = 2
@@ -218,3 +245,15 @@ offset_top = -4.0
 offset_right = 325.0
 offset_bottom = 0.031921387
 grow_vertical = 2
+
+[node name="Fps" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -474.0
+offset_top = 96.0
+offset_right = -406.0
+offset_bottom = 151.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
+text = "123"

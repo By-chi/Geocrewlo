@@ -16,3 +16,8 @@ func _on_continue_pressed() -> void:
 		"AI_Level":AI_level.value,
 	}
 	get_tree().change_scene_to_file("res://scene/Node2D/main.tscn")
+
+
+func _on_option_button_item_selected(index:  int) -> void:
+	#$Map.texture=load("res://texture/thumbnail/"+)
+	pass

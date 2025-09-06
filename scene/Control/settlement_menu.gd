@@ -2,6 +2,7 @@ extends Control
 @export var red_rect:ColorRect
 @export var blue_rect:ColorRect
 func _ready() -> void:
+	Input.mouse_mode=Input.MOUSE_MODE_HIDDEN
 	var tween_color:Tween
 	var tween_scale:Tween
 	if GameData.camp_score[0]>=GameData.camp_score[1]:
@@ -72,7 +73,7 @@ func _ready() -> void:
 				)).pad_decimals(2)
 			]
 		)
-		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_FILL
 		label.add_theme_font_size_override("font_size",40)
 		$Red2/VBoxContainer.add_child(label)
 	for i in blue_list:
@@ -92,7 +93,7 @@ func _ready() -> void:
 				)).pad_decimals(2)
 			]
 		)
-		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_FILL
 		label.add_theme_font_size_override("font_size",40)
 		$Blue2/VBoxContainer.add_child(label)
 	for i in Global.entity_list:

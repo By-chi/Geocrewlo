@@ -10,7 +10,7 @@ var start_location:Array[PackedVector4Array]=[
 	[Vector4(253,1500,4188,1500),
 	Vector4(18694,8911,18694,12298)],
 ]
-var names:PackedStringArray=[
+const names:PackedStringArray=[
 	"雪地 (Ice World)",
 	"核弹小镇",
 	"断桅港",
