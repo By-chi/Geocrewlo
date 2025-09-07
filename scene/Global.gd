@@ -85,6 +85,8 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventKey:
 		if event.keycode==KEY_ESCAPE&&game_main!=null:
 			get_tree().paused=true  # 暂停游戏
+			if player.aiming:
+				Input.mouse_mode=Input.MOUSE_MODE_HIDDEN
 			menu.show()             # 显示暂停菜单
 
 # 物理帧更新：让自定义光标缓慢旋转（提升视觉效果）
@@ -96,7 +98,32 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)  # 隐藏系统鼠标光标（使用自定义光标）
 	load_options()  # 加载玩家保存的游戏设置（如显示、控制选项）
 	randomize()     # 初始化随机数种子（确保随机结果不重复）
+	for i in get_all_children_recursively(self):
+		if i is Label:
+			i.mouse_filter=Control.MOUSE_FILTER_PASS
+		if i is Button||i is Label:
+			i.mouse_entered.connect(func():
+				$UI.stream=preload("res://sound/ui.mp3")
+				$UI.play()
+			)
 
+func get_all_children_recursively(node: Node) -> Array:
+	var all_children = []
+	
+	# 获取直接子节点
+	var direct_children = node.get_children()
+	
+	# 遍历直接子节点
+	for child in direct_children:
+		# 将当前子节点添加到结果数组
+		all_children.append(child)
+		
+		# 递归获取当前子节点的所有子节点，并添加到结果数组
+		var grand_children = get_all_children_recursively(child)
+		# 使用append_array替代extend，兼容更多Godot版本
+		all_children.append_array(grand_children)
+	
+	return all_children
 # 更新阵营视野：判断某敌实体是否在当前阵营的任意实体视野内
 # 参数：id-敌实体ID，camp-当前阵营索引
 func update_camp_view(id:int,camp:int)->void:

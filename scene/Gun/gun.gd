@@ -8,7 +8,11 @@ class_name Gun
 # 总弹药容量（备用弹药）
 var ammunition_capacity:=0
 # 当前弹夹容量
-var clip_capacity:int
+var clip_capacity:int:
+	set(value):
+		clip_capacity=value
+		if host==Global.game_main.UI.entity:
+			Global.game_main.UI.clip_capacity.text=str(clip_capacity)+"/"+str(ammunition_capacity)
 # 初始化标记，确保某些配置只在首次初始化时执行
 var is_init:=true
 # 导出变量，换弹计时器（控制换弹时间）
@@ -17,9 +21,10 @@ var is_init:=true
 # 枪支ID（用于从GunData中获取对应配置），带有setter方法处理属性初始化
 var id:=1:
 	set(value):
+		id=value
 		# 仅在初始化时执行一次性配置
 		if is_init:
-			id=value
+			
 			# 设置枪支精灵纹理
 			$Sprite2D.texture=GunData.textures[id]
 			# 调整碰撞形状大小以匹配纹理
@@ -53,22 +58,12 @@ func shoot()->void:
 	# 如果没有持有者，不执行射击
 	if host == null:
 		return
-	
 	# 计算距离上次射击的时间间隔
 	var interval:=Time.get_ticks_msec()-last_shoot_time
 	# 检查是否满足射击冷却时间
 	if interval>=GunData.shoot_cds[id]:
 		# 检查弹夹是否有子弹
 		if clip_capacity>0:
-			# 计算扩散角度（随时间恢复精度，受持有者手部力量影响）
-			spread_angle=maxf(
-				GunData.base_spread_angle[id],  # 基础扩散角度（最小扩散）
-				spread_angle-
-				host.hand_strength*
-				0.00000016*
-				interval  # 随时间减少扩散（提升精度）
-			)
-			
 			# 在枪口位置生成枪口粒子效果
 			Global.add_generic_particles(
 				Global.MUZZLE_PARTICLES, 
@@ -125,13 +120,23 @@ func shoot()->void:
 				if host.is_player:
 					host.audio_stream_player.stream=preload("res://sound/entity/no_bullets.mp3")
 					host.audio_stream_player.play()
-
+var last_adjust_scattering_time:=0.0
 # 每帧更新处理
 func _process(delta: float) -> void:
 	# 如果有持有者，使枪支向手持目标位置移动（受手部力量影响移动速度）
 	if host!=null:
 		position=position.move_toward(GunData.handheld_positions[id],host.hand_strength*delta)
-
+		if host.is_player:
+			
+			var interval:=Time.get_ticks_msec()-last_adjust_scattering_time
+			spread_angle=maxf(
+				GunData.base_spread_angle[id],  # 基础扩散角度（最小扩散）
+				spread_angle-
+				host.hand_strength*
+				0.00000016*
+				interval  # 随时间减少扩散（提升精度）
+			)
+			last_adjust_scattering_time=Time.get_ticks_msec()
 # 换弹逻辑函数
 func reload()->void:
 	# 没有持有者则不执行换弹
@@ -145,7 +150,6 @@ func reload()->void:
 		# 播放换弹音效
 		audio_stream_player2d.stream=GunData.reload_sound[id]
 		audio_stream_player2d.play()
-
 # 换弹计时器超时回调（完成换弹）
 func _on_reload_timeout() -> void:
 	# 计算需要补充的弹药量（弹夹最大容量 - 当前弹夹容量）

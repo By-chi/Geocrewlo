@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://bg1ht2uonotlr"]
+[gd_scene load_steps=20 format=3 uid="uid://bg1ht2uonotlr"]
 
 [ext_resource type="Script" uid="uid://cppedpidajl8k" path="res://scene/Node2D/main.gd" id="1_gpdt7"]
 [ext_resource type="Script" uid="uid://cuiiopq3bh7e4" path="res://scene/Node2D/GUI.gd" id="2_a1aga"]
 [ext_resource type="Script" uid="uid://bp8x2cxhtje6g" path="res://scene/Node2D/minimap.gd" id="2_vf0sl"]
 [ext_resource type="Script" uid="uid://b5i11eiwy2xo3" path="res://scene/Gun/gun_data.gd" id="4_i41st"]
 [ext_resource type="Shader" uid="uid://ckrsmg57dbu7d" path="res://gdshader/invert_colors.gdshader" id="4_nb5eh"]
+[ext_resource type="AudioStream" uid="uid://ckw7qh17ay5tp" path="res://background_music/nnnn.mp3" id="6_6enl1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnw4c"]
 
@@ -139,7 +140,7 @@ offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 0
 step = 0.0
-value = 50.0
+value = 100.0
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture1D_i41st")
 texture_progress = SubResource("GradientTexture1D_cnw4c")
@@ -257,3 +258,10 @@ offset_bottom = 151.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 40
 text = "123"
+
+[node name="BackedGround" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6enl1")
+volume_db = -10.0
+pitch_scale = 0.6
+autoplay = true
+parameters/looping = true

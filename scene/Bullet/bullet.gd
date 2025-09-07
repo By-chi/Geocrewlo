@@ -59,7 +59,14 @@ func hit(node: Node2D) -> void:
 		if host.is_player:
 			host.audio_stream_player.stream=preload("res://sound/entity/hit.mp3")
 			host.audio_stream_player.play()
-		
+		elif entity.is_player&&Global.option_data["显示"]["受击提示"]:
+			var sprite:=Sprite2D.new()
+			sprite.texture=preload("res://texture/main/hit_prompt.png")
+			sprite.position=Vector2.LEFT.rotated(rotation)*600
+			sprite.ready.connect(func():
+				get_tree().create_timer(0.5).timeout.connect(sprite.queue_free)
+				,)
+			Global.player.add_child(sprite)
 		# 在碰撞点添加击中粒子效果
 		Global.add_generic_particles(Global.HIT_PARTICLES,get_collision_point(),rotation,Vector2(60,60))
 		

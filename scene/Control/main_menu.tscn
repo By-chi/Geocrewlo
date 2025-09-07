@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2t27w1i0lyw3"]
+[gd_scene load_steps=13 format=3 uid="uid://b2t27w1i0lyw3"]
 
 [ext_resource type="Script" uid="uid://5tc81qoriotl" path="res://scene/Control/main_menu.gd" id="1_2fwvj"]
 [ext_resource type="Shader" uid="uid://7fc6eb55g3em" path="res://gdshader/background.gdshader" id="1_3er1b"]
 [ext_resource type="Texture2D" uid="uid://bk3d2kbsy5erm" path="res://texture/logo/game_icon.svg" id="1_hxu56"]
+[ext_resource type="AudioStream" uid="uid://dy67inh8r1g6r" path="res://background_music/fluorescence.mp3" id="4_xwgui"]
 
 [sub_resource type="Gradient" id="Gradient_hxu56"]
 
@@ -175,3 +176,9 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0iwki")
 theme_override_styles/hover = SubResource("StyleBoxFlat_by01r")
 theme_override_styles/focus = SubResource("StyleBoxFlat_0iwki")
 text = "退出"
+
+[node name="BackedGround" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xwgui")
+pitch_scale = 0.5
+autoplay = true
+parameters/looping = true

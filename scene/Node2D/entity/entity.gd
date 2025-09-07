@@ -20,14 +20,15 @@ func set_health(new_health:float,mastermind:Entity)->void:
 	# 若生命值降低（受伤），启动治疗计时器（根据受伤量计算治疗时长）
 	if new_health<EntityData.health:
 		heal_timer.start((EntityData.health-new_health)*0.01*EntityData.heal_base_time)
-	
+		if is_player&&get("aiming"):
+			camera.position+=Vector2(randf_range(-100,100),randf_range(-100,100))
 	# 处理死亡逻辑（生命值≤0时）
 	if new_health<=0:
+		
 		# 玩家锁血判定（开启"锁血"选项时，仅将生命值设为0，不触发死亡）
 		if is_player&&Global.option_data["玩家"]["锁血"]:
 			health=0
 			return
-		
 		# 死亡时掉落当前持有枪支
 		if gun!=null:
 			# 复制当前枪支（避免原枪支被销毁）
@@ -89,7 +90,14 @@ func set_health(new_health:float,mastermind:Entity)->void:
 		
 		# 调用重生方法（子类实现具体逻辑）
 		rebirth()
-	
+		Global.game_main.UI.score.value=GameData.camp_score[0]/float(GameData.camp_score[0]+GameData.camp_score[1])*100
+		Global.game_main.UI.score_red.text=str(GameData.camp_score[0])
+		Global.game_main.UI.score_blue.text=str(GameData.camp_score[1])
+		if self==Global.game_main.UI.entity||mastermind==Global.game_main.UI.entity:
+			Global.game_main.UI.Kd.text=str(GameData.score[Global.game_main.UI.entity.camp][Global.game_main.UI.entity.id])+" - "+str(GameData.mortality_database[Global.game_main.UI.entity.camp][Global.game_main.UI.entity.id])
+
+	if self==Global.game_main.UI.entity:
+		Global.game_main.UI.lifebar.value=new_health
 	# 更新当前生命值
 	health=new_health
 

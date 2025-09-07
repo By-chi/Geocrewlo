@@ -60,38 +60,53 @@ func _ready() -> void:
 		var label:=Label.new()
 		if Global.entity_list[0][i.id].is_player:
 			label.self_modulate=Color.LIME_GREEN
-		label.text="{0}        {1}  -  {2}        {3}".format(
-			[i.name_label.text,
-			str(GameData.score[0][i.id]),
-			str(GameData.mortality_database[0][i.id]),
-			str(calculate_player_score(
-				GameData.score[0][i.id],
-				GameData.mortality_database[0][i.id],
-				GameData.camp_score[0],
-				GameData.camp_score[1],
-				red_list.size()*2
-				)).pad_decimals(2)
-			]
+		var tween=label.create_tween()
+		var score:=calculate_player_score(
+					GameData.score[0][i.id],
+					GameData.mortality_database[0][i.id],
+					GameData.camp_score[0],
+					GameData.camp_score[1],
+					red_list.size()*2
+					)
+		var i_name_label_text:String=i.name_label.text
+		var i_id:int=i.id
+		tween.tween_method(func(value:=0.0):
+			label.text="{0}        {1}  -  {2}        {3}".format(
+				[i_name_label_text,
+				str(GameData.score[0][i_id]),
+				str(GameData.mortality_database[0][i_id]),
+				str(value*score).pad_decimals(2)
+				]
+			)
+			,0.0,1.0,3
 		)
 		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_FILL
 		label.add_theme_font_size_override("font_size",40)
+		
 		$Red2/VBoxContainer.add_child(label)
 	for i in blue_list:
 		var label:=Label.new()
 		if Global.entity_list[1][i.id].is_player:
 			label.self_modulate=Color.LIME_GREEN
-		label.text="{0}        {1}  -  {2}        {3}".format(
-			[i.name_label.text,
-			str(GameData.score[1][i.id]),
-			str(GameData.mortality_database[1][i.id]),
-			str(calculate_player_score(
-				GameData.score[1][i.id],
-				GameData.mortality_database[1][i.id],
-				GameData.camp_score[1],
-				GameData.camp_score[0],
-				blue_list.size()*2
-				)).pad_decimals(2)
-			]
+		var score:=calculate_player_score(
+					GameData.score[1][i.id],
+					GameData.mortality_database[1][i.id],
+					GameData.camp_score[1],
+					GameData.camp_score[0],
+					red_list.size()*2
+					)
+		var tween=label.create_tween()
+		var i_name_label_text:String=i.name_label.text
+		var i_id:int=i.id
+		tween.tween_method(func(value:=0.0):
+			label.text="{0}        {1}  -  {2}        {3}".format(
+				[i_name_label_text,
+				str(GameData.score[1][i_id]),
+				str(GameData.mortality_database[1][i_id]),
+				str(value*score).pad_decimals(2)
+				]
+			)
+			,0.0,1.0,3
 		)
 		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_FILL
 		label.add_theme_font_size_override("font_size",40)

@@ -14,14 +14,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Engine.get_physics_frames()%30==0:
 		entity=get_viewport().get_camera_2d().get_parent()
-	if entity!=null:
-		lifebar.value=entity.health
-		if entity.gun!=null:
-			clip_capacity.text=str(entity.gun.clip_capacity)+"/"+str(entity.gun.ammunition_capacity)
-		score.value=GameData.camp_score[0]/float(GameData.camp_score[0]+GameData.camp_score[1])*100
-		score_red.text=str(GameData.camp_score[0])
-		score_blue.text=str(GameData.camp_score[1])
-		Kd.text=str(GameData.score[entity.camp][entity.id])+" - "+str(GameData.mortality_database[entity.camp][entity.id])
+	#if entity!=null:
+		#lifebar.value=entity.health
+		#if entity.gun!=null:
+			#clip_capacity.text=str(entity.gun.clip_capacity)+"/"+str(entity.gun.ammunition_capacity)
+		#score.value=GameData.camp_score[0]/float(GameData.camp_score[0]+GameData.camp_score[1])*100
+		#score_red.text=str(GameData.camp_score[0])
+		#score_blue.text=str(GameData.camp_score[1])
+		#Kd.text=str(GameData.score[entity.camp][entity.id])+" - "+str(GameData.mortality_database[entity.camp][entity.id])
 	if (GameData.camp_score[0]>=GameData.target_score||GameData.camp_score[1]>=GameData.target_score)&&!Global.is_over:
 		Global.game_over()
 	else:

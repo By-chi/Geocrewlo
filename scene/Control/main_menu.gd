@@ -26,6 +26,8 @@ func _ready() -> void:
 	for button in button_list.get_children():
 		if button is Button:
 			button.mouse_entered.connect(func():
+				Global.get_node("UI").stream=preload("res://sound/ui.mp3")
+				Global.get_node("UI").play()
 				var button_tween:Tween=button.create_tween()
 				button_tween.tween_method(
 				func(value:=0.0):

@@ -17,4 +17,6 @@ func _on_set_pressed() -> void:
 
 func _on_continue_pressed() -> void:
 	hide()
+	if Global.player.aiming:
+		Input.mouse_mode=Input.MOUSE_MODE_HIDDEN
 	get_tree().paused=false

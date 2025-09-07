@@ -31,7 +31,6 @@ func rebirth()->void:
 			add_child(gun_node)  # 将枪支添加为玩家子节点
 			gun.is_init=true  # 初始化枪支
 			gun_node.id=replacement_gun_id  # 应用替换枪支ID
-
 # 根据窗口大小和相机缩放，调整玩家视野碰撞体大小（确保视野范围适配屏幕）
 func resize_view()->void:
 	# 遍历所有实体（玩家和AI），更新它们的视野碰撞体大小
@@ -56,7 +55,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if aiming:
 			# 瞄准状态下，鼠标拖动控制相机位置（实现视角平移）
-			camera.position+=event.relative*aim_move_sensitivity
+			camera.position+=event.relative*aim_move_sensitivity*int(Global.option_data["玩家"]["瞄准灵敏度"])*0.01
 
 # 瞄准状态标记（控制视角模式和鼠标显示），带setter方法处理状态切换
 var aiming:=false:
@@ -92,11 +91,13 @@ func _process(delta: float) -> void:
 	# 按键响应：按下“拾取”键，拾取附近枪支
 	elif Input.is_action_just_pressed("拾取"):
 		pick_up_gun()
+	
 
 # 玩家物理帧更新（重写父类方法，保持基础物理逻辑）
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)  # 调用父类_physics_process（处理移动、碰撞等）
-
+	if Engine.get_physics_frames()%5&&gun!=null:
+		Global.cursors.scale=Vector2.ONE*(0.5+gun.spread_angle*10)
 # 玩家移动逻辑（重写父类虚函数，通过输入向量控制移动）
 func move() -> void:
 	super.move()  # 调用父类move（空实现，预留扩展）
