@@ -24,7 +24,6 @@ var id:=1:
 		id=value
 		# 仅在初始化时执行一次性配置
 		if is_init:
-			
 			# 设置枪支精灵纹理
 			$Sprite2D.texture=GunData.textures[id]
 			# 调整碰撞形状大小以匹配纹理
@@ -37,6 +36,7 @@ var id:=1:
 			reload_timer.wait_time=GunData.reload_time[id]
 			# 标记初始化完成
 			is_init=false
+			audio_stream_player2d.max_polyphony=max(1,int(GunData.shoot_sound[id].get_length()/GunData.shoot_cds[id]))
 		# 更新扩散角度（每次ID变更时生效）
 		spread_angle=GunData.base_spread_angle[id]
 
@@ -76,12 +76,15 @@ func shoot()->void:
 			for i in range(GunData.pellets_number[id]):
 				# 计算每颗子弹的随机扩散角度
 				var angle:=rotation+spread_angle*randf_range(-1,1)
+				#var angle:=rotation+spread_angle
 				# 实例化子弹节点
 				var bullet:RayCast2D=preload("res://scene/Bullet/bullet.tscn").instantiate()
 				# 设置子弹旋转角度
 				bullet.rotation=angle
 				# 设置子弹初始位置（从枪口前方发射）
-				bullet.global_position=global_position+Vector2.LEFT.rotated(angle)*200.0
+				bullet.global_position=global_position
+				bullet.start_position=bullet.global_position
+				bullet.last_position=bullet.global_position
 				# 设置子弹的持有者
 				bullet.host=host
 				# 记录子弹对应的枪支ID
@@ -89,6 +92,7 @@ func shoot()->void:
 				# 设置子弹移动方向和速度
 				bullet.move=Vector2.RIGHT.rotated(angle)*GunData.bullet_speeds[id]
 				# 将子弹添加到游戏主节点
+				
 				Global.game_main.add_child(bullet)
 			
 			# 应用后坐力（枪支位置后移）
@@ -126,17 +130,15 @@ func _process(delta: float) -> void:
 	# 如果有持有者，使枪支向手持目标位置移动（受手部力量影响移动速度）
 	if host!=null:
 		position=position.move_toward(GunData.handheld_positions[id],host.hand_strength*delta)
-		if host.is_player:
-			
-			var interval:=Time.get_ticks_msec()-last_adjust_scattering_time
-			spread_angle=maxf(
-				GunData.base_spread_angle[id],  # 基础扩散角度（最小扩散）
-				spread_angle-
-				host.hand_strength*
-				0.00000016*
-				interval  # 随时间减少扩散（提升精度）
-			)
-			last_adjust_scattering_time=Time.get_ticks_msec()
+		var interval:=Time.get_ticks_msec()-last_adjust_scattering_time
+		spread_angle=maxf(
+			GunData.base_spread_angle[id],  # 基础扩散角度（最小扩散）
+			spread_angle-
+			host.hand_strength*
+			0.00000016*
+			interval  # 随时间减少扩散（提升精度）
+		)
+		last_adjust_scattering_time=Time.get_ticks_msec()
 # 换弹逻辑函数
 func reload()->void:
 	# 没有持有者则不执行换弹

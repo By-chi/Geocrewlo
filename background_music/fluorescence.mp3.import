@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/fluorescence.mp3-c967d73d3d2b6d9f11bcfeaaa0bc
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

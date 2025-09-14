@@ -91,15 +91,14 @@ elimination_aannouncement = NodePath("EliminationAnnouncement")
 
 [node name="Map" type="Panel" parent="UI"]
 modulate = Color(1, 1, 1, 0.65500003)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -350.0
-offset_top = 50.0
-offset_right = -50.0
-offset_bottom = 350.0
+anchors_preset = -1
+anchor_left = 0.77213544
+anchor_top = 0.05144033
+anchor_right = 0.96744794
+anchor_bottom = 0.3600823
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vf0sl")
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UI/Map"]
 layout_mode = 1
@@ -128,15 +127,11 @@ zoom = Vector2(0.02, 0.02)
 script = ExtResource("4_i41st")
 
 [node name="Lifebar" type="TextureProgressBar" parent="UI"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -42.0
-offset_right = 250.0
-offset_bottom = -37.0
+anchors_preset = -1
+anchor_left = 0.3372396
+anchor_top = 0.95679015
+anchor_right = 0.66276044
+anchor_bottom = 0.96193415
 grow_horizontal = 2
 grow_vertical = 0
 step = 0.0
@@ -144,120 +139,114 @@ value = 100.0
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture1D_i41st")
 texture_progress = SubResource("GradientTexture1D_cnw4c")
+metadata/_edit_use_anchors_ = true
 
 [node name="clip_capacity" type="Label" parent="UI"]
 material = SubResource("ShaderMaterial_i41st")
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -154.0
-offset_top = -69.0
-offset_right = -59.0
-offset_bottom = -34.0
+anchors_preset = -1
+anchor_left = 0.89973956
+anchor_top = 0.92901236
+anchor_right = 0.96158856
+anchor_bottom = 0.9650206
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "000/000"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="score" type="TextureProgressBar" parent="UI"]
 modulate = Color(1, 1, 1, 0.669)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -250.0
-offset_top = 20.0
-offset_right = 250.0
-offset_bottom = 56.0
+anchors_preset = -1
+anchor_left = 0.3372396
+anchor_top = 0.020576132
+anchor_right = 0.66276044
+anchor_bottom = 0.057613168
 grow_horizontal = 2
 value = 43.0
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture1D_ydary")
 texture_progress = SubResource("GradientTexture1D_sdvoa")
+metadata/_edit_use_anchors_ = true
 
 [node name="Red" type="Label" parent="UI/score"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -11.5
-offset_right = 1.0
-offset_bottom = 11.5
+anchors_preset = -1
+anchor_top = -0.19444445
+anchor_right = 0.042
+anchor_bottom = 1.1944444
+offset_top = 13.5
+offset_right = -20.0
+offset_bottom = -13.5
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "0"
+metadata/_edit_use_anchors_ = true
 
 [node name="Blue" type="Label" parent="UI/score"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = -1
+anchor_left = 0.958
+anchor_top = -0.19444445
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -1.0
-offset_top = -11.5
-offset_bottom = 11.5
+anchor_bottom = 1.1944444
+offset_left = 20.0
+offset_top = 13.5
+offset_bottom = -13.5
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "0"
+metadata/_edit_use_anchors_ = true
 
 [node name="Time" type="Label" parent="UI/score"]
 material = SubResource("ShaderMaterial_6enl1")
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -34.0
-offset_top = -8.0
-offset_right = 34.0
-offset_bottom = 47.0
+anchors_preset = -1
+anchor_left = 0.432
+anchor_top = 0.7777778
+anchor_right = 0.568
+anchor_bottom = 2.3055556
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
 text = "000"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="KD" type="Label" parent="UI"]
 material = SubResource("ShaderMaterial_nb5eh")
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 111.0
-offset_top = -68.0
-offset_right = 161.0
-offset_bottom = -33.0
+anchors_preset = -1
+anchor_left = 0.072265625
+anchor_top = 0.93004113
+anchor_right = 0.10481771
+anchor_bottom = 0.9660494
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "0 - 0"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="EliminationAnnouncement" type="VBoxContainer" parent="UI"]
 modulate = Color(1, 1, 1, 0.573)
 anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.89400005
-offset_left = 60.0
-offset_top = -4.0
-offset_right = 325.0
-offset_bottom = 0.031921387
+anchor_left = 0.0390625
+anchor_top = 0.70884776
+anchor_right = 0.102864586
+anchor_bottom = 0.8940329
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Fps" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -474.0
-offset_top = 96.0
-offset_right = -406.0
-offset_bottom = 151.0
+anchors_preset = -1
+anchor_left = 0.69140625
+anchor_top = 0.09876543
+anchor_right = 0.73567706
+anchor_bottom = 0.15534979
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 40
 text = "123"
+metadata/_edit_use_anchors_ = true
 
 [node name="BackedGround" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_6enl1")

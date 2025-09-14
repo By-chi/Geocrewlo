@@ -1,7 +1,6 @@
 # 继承自CanvasLayer，作为游戏的**全局管理器**（Global）
 # 统筹游戏核心全局逻辑：游戏结束判定、粒子生成、输入控制、配置加载/保存、阵营视野同步、脚本属性保存等
 extends CanvasLayer
-
 # 游戏初始化参数字典（存储地图、人口、模式等启动配置，从主菜单传递）
 var init_args:Dictionary
 # 游戏主控制器节点引用（关联Game Main场景，用于操作实体、地图等）
@@ -24,6 +23,8 @@ var is_over:=false
 
 # 游戏结束核心逻辑（判定胜负、清理场景、切换结算界面）
 func game_over()->void:
+	if is_over:
+		return
 	is_over=true  # 标记游戏已结束
 	Engine.time_scale=0.1  # 放慢时间流速（营造结束慢动作效果）
 	
@@ -106,7 +107,7 @@ func _ready() -> void:
 				$UI.stream=preload("res://sound/ui.mp3")
 				$UI.play()
 			)
-
+	_on_save_pressed()
 func get_all_children_recursively(node: Node) -> Array:
 	var all_children = []
 	
@@ -272,6 +273,16 @@ func _update_options()->void:
 	# 控制辉光效果开启（从"显示"→"辉光效果"读取）
 	$WorldEnvironment.environment.glow_enabled=option_data["显示"]["\"辉光\" 效果"]
 	
+	ProjectSettings.set_setting("display/window/stretch/scale",float(option_data["显示"]["分辨率缩放"]))
+	#RenderingServer.viewport_set_size(get_viewport().get_viewport_rid(),int(option_data["显示"]["分辨率 宽"]),int(option_data["显示"]["分辨率 高"]))
+	get_window().size=Vector2i(int(option_data["显示"]["分辨率 宽"]),int(option_data["显示"]["分辨率 高"]))
+	if option_data["显示"]["全屏"]:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	
+	print(ProjectSettings.get_setting("display/window/stretch/scale"))
+	#get_tree().root.child_controls_changed()
 	# 控制FPS显示（从"显示"→"显示FPS"读取，需游戏主节点已初始化）
 	if game_main!=null:
 		game_main.UI.Fps.visible=option_data["显示"]["显示 \"FPS\""]

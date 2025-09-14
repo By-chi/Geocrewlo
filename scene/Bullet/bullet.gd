@@ -13,18 +13,46 @@ var free:=false
 @export var head:Area2D
 # 子弹发射的起始时间（毫秒），用于计算伤害衰减
 var start_time:int
-
+var trajectory:Sprite2D
 # 节点就绪时调用的函数
 func _ready() -> void:
+	speed=move.length()
 	# 根据枪械速度设置缩放比例（可能用于视觉效果或碰撞检测范围）
 	scale.x=GunData.bullet_speeds[gun_id]/16000.0
 	# 记录子弹发射的起始时间
 	start_time=Time.get_ticks_msec()
 	# 添加碰撞例外，避免子弹立即击中发射者自身的受伤区域
 	add_exception(host.injury_area)
+	if Global.option_data["显示"]["弹道"]:
+		$Sprite2D.hide()
+		trajectory=Sprite2D.new()
+		var gradient:=GradientTexture1D.new()
+		gradient.gradient=Gradient.new()
+		gradient.gradient.set_color(0,Color.TRANSPARENT)
+		trajectory.texture=gradient
+
+
+		trajectory.scale=Vector2(0,3)
+		trajectory.rotation=rotation
+		trajectory.global_position=host.gun.to_global(GunData.muzzle[host.gun.id])
+		trajectory.ready.connect(func():
+			var node:=trajectory
+			get_tree().create_timer(0.3).timeout.connect(
+				func():
+					var tween:=node.create_tween()
+					tween.tween_property(node,"self_modulate",Color.TRANSPARENT,0.1)
+					tween.finished.connect(node.queue_free)
+			)
+		)
+		
+		Global.game_main.add_child(trajectory)
 	# 等待0.1秒后播放子弹发射/飞行音效
 	await get_tree().create_timer(0.1).timeout
 	$AudioStreamPlayer2D.play()
+	get_tree().create_timer(4).timeout.connect(queue_free)
+	
+	
+	
 
 # 处理碰撞逻辑的函数，参数为碰撞到的节点
 func hit(node: Node2D) -> void:
@@ -74,16 +102,28 @@ func hit(node: Node2D) -> void:
 	else:
 		# 在碰撞点添加火花粒子效果
 		Global.add_generic_particles(Global.SPARK_PARTICLES, get_collision_point(),get_collision_normal().angle(),Vector2(6,6))
-	
+	if trajectory!=null:
+		trajectory.global_position=(start_position+get_collision_point())*0.5
+		trajectory.scale.x=abs((get_collision_point()-start_position).length()/256.0)
+	set_physics_process(false)
 	# 标记子弹已失效
 	free=true
 	# 销毁子弹节点
 	queue_free()
-
+var speed:float
+var start_position:Vector2
 # 物理帧更新函数，处理子弹运动和碰撞检测
+var last_position:Vector2
 func _physics_process(delta: float) -> void:
 	# 检查是否发生碰撞，如果是则处理碰撞逻辑
 	if is_colliding():
 		hit(get_collider())
+	elif trajectory!=null:
+		trajectory.global_position+=move*delta*0.5
+		trajectory.scale.x=max(0,trajectory.scale.x+speed*delta/256.0-0.2)
+	position=last_position
 	# 根据移动向量和delta时间更新子弹位置
-	position+=move*delta
+	last_position+=move*delta
+	target_position=to_local(last_position)
+	
+	

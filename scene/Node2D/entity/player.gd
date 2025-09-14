@@ -37,7 +37,7 @@ func resize_view()->void:
 	for i in Global.entity_list:
 		for j in i:
 			# 视野碰撞体大小 = 窗口大小 / 相机缩放比例（保证视野覆盖屏幕范围）
-			j.view.get_node("CollisionShape2D").shape.size=Vector2(get_window().size)/camera.zoom
+			j.view.get_node("CollisionShape2D").shape.size=Vector2(get_viewport_rect().size)/camera.zoom
 
 # 玩家枪支旋转逻辑（重写父类方法，实现“瞄准鼠标”功能）
 func rotate_gun()->void:

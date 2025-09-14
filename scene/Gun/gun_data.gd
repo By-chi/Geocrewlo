@@ -2,7 +2,7 @@ extends Node
 const textures:Array[Texture2D]=[
 	preload("res://texture/main/gun/1.png"),
 	preload("res://texture/main/gun/13.png"),
-	preload("res://texture/main/gun/19.png"),
+	preload("res://texture/main/gun/16.png"),
 	preload("res://texture/main/gun/34.png"),
 	preload("res://texture/main/gun/39.png"),
 	preload("res://texture/main/gun/32.png"),
@@ -65,13 +65,13 @@ const recoil:PackedFloat32Array=[
 	55.0,
 ]
 const shoot_sound:Array[AudioStream]=[
-	preload("res://sound/gun/1.mp3"),
+	preload("res://sound/gun/1.wav"),
 	preload("res://sound/gun/13.mp3"),
-	preload("res://sound/gun/16.mp3"),
+	preload("res://sound/gun/16.wav"),
 	preload("res://sound/gun/34.mp3"),
-	preload("res://sound/gun/39.mp3"),
-	preload("res://sound/gun/32.mp3"),
-	preload("res://sound/gun/36.mp3"),
+	preload("res://sound/gun/39.wav"),
+	preload("res://sound/gun/32.wav"),
+	preload("res://sound/gun/36.wav"),
 ]
 const initial_ammunition_capacity:PackedInt32Array=[
 	36,

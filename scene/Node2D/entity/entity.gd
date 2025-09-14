@@ -154,6 +154,8 @@ func shoot()->void:
 
 # 节点就绪时调用（初始化实体状态）
 func _ready() -> void:
+	camera.zoom=EntityData.zoom*Vector2.ONE
+	
 	# 根据阵营设置实体颜色（阵营0：红色，阵营1：蓝色）
 	if camp==0:
 		self_modulate=Color.RED*4  # 红色阵营（亮度×4）

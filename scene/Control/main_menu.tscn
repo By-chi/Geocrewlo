@@ -124,16 +124,17 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.85200006
-anchor_right = 0.85200006
-anchor_bottom = 1.0
-offset_left = -163.50409
-offset_top = 123.0
-offset_right = 144.49591
-offset_bottom = -163.0
+anchor_left = 0.9460729
+anchor_top = 0.127
+anchor_right = 0.9460729
+anchor_bottom = 0.127
+offset_left = -308.0
+offset_top = -0.44400024
+offset_bottom = 258.556
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 35
+metadata/_edit_use_anchors_ = true
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)

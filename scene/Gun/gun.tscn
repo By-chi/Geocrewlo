@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://iwbqt0xosp5t" path="res://scene/Gun/gun.gd" id="1_fvq6a"]
 [ext_resource type="Texture2D" uid="uid://raftslrufv11" path="res://texture/main/gun/32.png" id="2_jrkev"]
-[ext_resource type="AudioStream" uid="uid://pk0363xxksg1" path="res://sound/gun/1.mp3" id="3_jrkev"]
+[ext_resource type="AudioStream" uid="uid://dd2lhvuxt1kx5" path="res://sound/gun/1.wav" id="3_jrkev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fvq6a"]
 size = Vector2(22, 14)

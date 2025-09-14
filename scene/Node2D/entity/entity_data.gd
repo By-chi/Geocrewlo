@@ -7,3 +7,4 @@ const sprint_cd:=0.1#s
 const sprint_duration:=0.1#s
 const hand_strength:=300.0
 const heal_base_time:=6
+var zoom:=0.5

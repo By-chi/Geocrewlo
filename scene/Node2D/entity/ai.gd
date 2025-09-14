@@ -183,7 +183,9 @@ func on_area_entered_dodge_area(area: Area2D)->void:
 # 重生逻辑
 func rebirth()->void:
 	# 重生时随机切换枪支
+	
 	if gun!=null:
+		gun.is_init=true
 		gun.id=randi()%GunData.names.size()
 	# 随机设置新目的地，恢复闲逛
 	destination=map.empty_tiles[randi()%map.empty_tiles.size()]
@@ -199,7 +201,7 @@ func move()->void:
 			var direction:Vector2 = map.map_to_local(path[0])*map.scale - position
 			move_velocity = direction.normalized() * speed  # 设置移动速度
 			# 到达路径点后移除该点
-			if direction.length_squared() <= 32768:
+			if direction.length_squared() <= 2048:
 				path.remove_at(0)
 		else:
 			# 路径为空时，随机设置新目的地（闲逛）
@@ -212,10 +214,14 @@ var is_pathfinding := false
 # 获取自身在地图上的坐标（格子坐标）
 func _get_pos_on_map()->Vector2i:
 	return map.local_to_map(map.to_local(global_position))
-
+var get_point_path_cd:=1000
+var last_get_point_path_time:=0
 # 目的地属性（设置时自动计算路径）
 var destination:Vector2:
 	set(value):
+		if Time.get_ticks_msec()-last_get_point_path_time<get_point_path_cd:
+			return
+		last_get_point_path_time=Time.get_ticks_msec()
 		# 若关闭AI移动，则不更新目的地
 		if !Global.option_data["AI"]["AI 移动"]:
 			return

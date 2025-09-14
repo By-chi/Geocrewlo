@@ -33,5 +33,6 @@ func add_elimination_announcement(p1:Entity,p2:Entity)->void:
 	#rich.use_parent_material=true
 	rich.autowrap_mode=TextServer.AUTOWRAP_OFF
 	Global.game_main.UI.elimination_aannouncement.add_child(rich)
-	if Global.game_main.UI.elimination_aannouncement.get_child_count()>10:
+	var count:int=Global.game_main.UI.elimination_aannouncement.get_child_count()
+	for i in count-5:
 		Global.game_main.UI.elimination_aannouncement.get_child(0).queue_free()

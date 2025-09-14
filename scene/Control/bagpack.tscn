@@ -113,28 +113,26 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Name" type="Label" parent="Right"]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 66.0
-offset_right = 218.0
-offset_bottom = 149.0
+anchor_left = 0.04010939
+anchor_top = 0.06790123
+anchor_right = 0.1987238
+anchor_bottom = 0.15329218
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 60
 text = "Name"
+metadata/_edit_use_anchors_ = true
 
 [node name="Show" type="Panel" parent="Right"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -300.0
-offset_right = 350.0
-offset_bottom = 300.0
+anchors_preset = -1
+anchor_left = 0.18094803
+anchor_top = 0.19135803
+anchor_right = 0.819052
+anchor_bottom = 0.80864197
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_i0rs0")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Right/Show"]
 layout_mode = 1
@@ -148,25 +146,24 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_58hu5")
-expand_mode = 1
+expand_mode = 5
 stretch_mode = 5
 
 [node name="Equip" type="Button" parent="Right"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -54.0
-offset_top = -147.0
-offset_right = 54.0
-offset_bottom = -70.0
+anchors_preset = -1
+anchor_left = 0.35961714
+anchor_top = 0.84876543
+anchor_right = 0.6403829
+anchor_bottom = 0.9279835
+offset_left = 100.0
+offset_right = -100.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_kc5w5")
 text = "下次复活装备"
+metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 1

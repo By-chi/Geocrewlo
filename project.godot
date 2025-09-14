@@ -36,6 +36,8 @@ MapData="*res://scene/Map/map_data.gd"
 
 window/size/viewport_width=1536
 window/size/viewport_height=972
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 
 [editor_plugins]
@@ -211,7 +213,7 @@ ui_colorpicker_delete_preset={
 [physics]
 
 2d/run_on_separate_thread=true
-2d/solver/solver_iterations=8
+2d/solver/solver_iterations=1
 2d/solver/contact_max_allowed_penetration=0.01
 
 [rendering]
@@ -226,6 +228,8 @@ textures/vram_compression/import_etc2_astc=true
 shading/overrides/force_vertex_shading=true
 shading/overrides/force_lambert_over_burley=true
 textures/default_filters/anisotropic_filtering_level=0
+camera/depth_of_field/depth_of_field_bokeh_shape=0
+camera/depth_of_field/depth_of_field_bokeh_quality=0
 viewport/hdr_2d=true
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 textures/decals/filter=0

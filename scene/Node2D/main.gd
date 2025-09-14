@@ -20,6 +20,7 @@ func back_to_main_menu() -> void:
 
 # 节点就绪时调用（游戏启动的核心初始化逻辑）
 func _ready() -> void:
+	#Engine.time_scale=0.5
 	# 1. 初始化游戏基础状态
 	Global.timer.start(300)  # 启动全局计时器（推测为300秒游戏倒计时）
 	Global.is_over=false     # 标记游戏未结束
