@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bg1ht2uonotlr"]
+[gd_scene load_steps=26 format=3 uid="uid://bg1ht2uonotlr"]
 
 [ext_resource type="Script" uid="uid://cppedpidajl8k" path="res://scene/Node2D/main.gd" id="1_gpdt7"]
 [ext_resource type="Script" uid="uid://cuiiopq3bh7e4" path="res://scene/Node2D/GUI.gd" id="2_a1aga"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b5i11eiwy2xo3" path="res://scene/Gun/gun_data.gd" id="4_i41st"]
 [ext_resource type="Shader" uid="uid://ckrsmg57dbu7d" path="res://gdshader/invert_colors.gdshader" id="4_nb5eh"]
 [ext_resource type="AudioStream" uid="uid://ckw7qh17ay5tp" path="res://background_music/nnnn.mp3" id="6_6enl1"]
+[ext_resource type="Script" uid="uid://8rfqndfciqoh" path="res://scene/Node2D/command_system.gd" id="6_cnw4c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnw4c"]
 
@@ -70,6 +71,37 @@ shader = ExtResource("4_nb5eh")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nb5eh"]
 shader = ExtResource("4_nb5eh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6enl1"]
+bg_color = Color(0.21508199, 0.2347951, 0.24780053, 0.546)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0.22091639, 0.22091639, 0.22091639, 0.485)
+shadow_size = 4
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnw4c"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6enl1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v6icd"]
+bg_color = Color(0.62272733, 2.0094587e-06, 7.2196127e-07, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydary"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("UI")]
 visibility_layer = 3
@@ -248,9 +280,72 @@ theme_override_font_sizes/font_size = 40
 text = "123"
 metadata/_edit_use_anchors_ = true
 
+[node name="Console" type="Panel" parent="UI"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.032552082
+anchor_top = 0.05144033
+anchor_right = 0.27083334
+anchor_bottom = 0.6059671
+theme_override_styles/panel = SubResource("StyleBoxFlat_6enl1")
+script = ExtResource("6_cnw4c")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Console"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/Console/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="LineEdit" type="LineEdit" parent="UI/Console"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0.072842635, 0.072842635, 0.072842635, 1)
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 1)
+theme_override_colors/selection_color = Color(1, 0.49995556, 0.49995556, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_cnw4c")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6enl1")
+placeholder_text = "-_-!"
+context_menu_enabled = false
+emoji_menu_enabled = false
+
+[node name="Button" type="Button" parent="UI/Console"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_right = 5.0
+offset_bottom = 31.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_v6icd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ydary")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ydary")
+theme_override_styles/focus = SubResource("StyleBoxFlat_v6icd")
+
 [node name="BackedGround" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_6enl1")
 volume_db = -10.0
 pitch_scale = 0.6
 autoplay = true
 parameters/looping = true
+
+[connection signal="text_submitted" from="UI/Console/LineEdit" to="UI/Console" method="execute_command"]
+[connection signal="pressed" from="UI/Console/Button" to="UI/Console" method="close"]

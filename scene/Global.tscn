@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://b8innxkxfo2sx"]
 
-[ext_resource type="Script" uid="uid://djasd4b38iohd" path="res://scene/global.gd" id="1_xibyh"]
+[ext_resource type="Script" path="res://scene/global.gd" id="1_xibyh"]
 [ext_resource type="Texture2D" uid="uid://e7u008ya4aqm" path="res://texture/ui/cursors_1.png" id="2_6a0yn"]
 [ext_resource type="Script" uid="uid://ba5kioe5rihnh" path="res://scene/menu.gd" id="2_c0jts"]
 [ext_resource type="Texture2D" uid="uid://c5l0ij3gnr1p0" path="res://texture/ui/bagpack.svg" id="2_j5yac"]
@@ -279,27 +279,6 @@ theme_override_font_sizes/font_size = 34
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa513")
 text = "972"
 placeholder_text = "972"
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="CanvasLayer3/Options/TabContainer/显示/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = ExtResource("10_yo74n")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yo74n")
-text = "分辨率缩放"
-
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer3/Options/TabContainer/显示/HBoxContainer/Label3"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.47104248
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 34
-theme_override_styles/normal = SubResource("StyleBoxFlat_oa513")
-text = "1.0"
-placeholder_text = "1.0"
 metadata/_edit_use_anchors_ = true
 
 [node name="CheckButton" type="CheckButton" parent="CanvasLayer3/Options/TabContainer/显示/HBoxContainer"]

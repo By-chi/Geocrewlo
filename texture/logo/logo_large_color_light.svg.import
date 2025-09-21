@@ -1,14 +1,14 @@
 [remap]
 
 importer="svg"
-type="SVGTexture"
+type="DPITexture"
 uid="uid://c6vngkds6qmfq"
-path="res://.godot/imported/logo_large_color_light.svg-e29b867b4b4826862fad78484e202584.svgtex"
+path="res://.godot/imported/logo_large_color_light.svg-e29b867b4b4826862fad78484e202584.dpitex"
 
 [deps]
 
 source_file="res://texture/logo/logo_large_color_light.svg"
-dest_files=["res://.godot/imported/logo_large_color_light.svg-e29b867b4b4826862fad78484e202584.svgtex"]
+dest_files=["res://.godot/imported/logo_large_color_light.svg-e29b867b4b4826862fad78484e202584.dpitex"]
 
 [params]
 

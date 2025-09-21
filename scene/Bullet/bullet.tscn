@@ -16,6 +16,7 @@ script = ExtResource("1_7k21s")
 head = NodePath("Head")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(4, 4)
 texture = ExtResource("2_o8ju1")
 centered = false

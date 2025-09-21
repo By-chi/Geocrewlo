@@ -5,11 +5,7 @@ extends Entity
 var map:TileMapLayer
 
 # 慢反应相关变量（模拟AI思考延迟）
-var reaction_delay_ms: int = 800-Global.init_args["AI_Level"]*125:  # 反应延迟（毫秒），AI等级越高延迟越低
-	set(value):
-		reaction_delay_ms=value
-		await get_tree().create_timer(0.1).timeout
-		reaction_delay_ms=800-Global.init_args["AI_Level"]*125
+var reaction_delay_ms: int = 70-Global.init_args["AI_Level"]*80  # 反应延迟（毫秒），AI等级越高延迟越低
 var detected_target  # 即时检测到的潜在目标（未经过延迟确认）
 var target_detected_time: int = 0  # 首次检测到目标的时间戳（用于计算延迟）
 var target_lost_time: int = 0  # 丢失目标的起始时间戳（用于延迟确认丢失）
@@ -51,7 +47,7 @@ func _process(delta: float) -> void:
 					aim_pos+=Vector2(randf(),randf())*(35-Global.init_args["AI_Level"]*5)  # 等级越高偏移越小
 				
 				# 计算预瞄位置（高等级AI使用）
-				if Global.init_args["AI_Level"] >= 6&&gun!=null:
+				if Global.init_args["AI_Level"] >= 7&&gun!=null:
 					target_position = get_optimized_aim_point(
 						aim_pos,  # 目标位置（含随机偏移）
 						global_position,  # 自身位置
@@ -112,13 +108,21 @@ func shoot()->void:
 	# 弹夹为空时自动换弹
 	if gun.clip_capacity == 0:
 		gun.reload()
-
+var last_target_position:Vector2
 # 旋转枪支瞄准目标
 func rotate_gun()->void:
-	if target_entity == null:
+	if target_entity == null||Engine.get_physics_frames()%2==0:
 		return
 	# 让枪支瞄准目标位置
-	gun.look_at(target_position)
+	gun.look_at(last_target_position)
+	#var s:=Sprite2D.new()
+	#s.texture=preload("res://texture/main/hit_prompt.png")
+	#s.global_position=last_target_position
+	#s.ready.connect(func():
+		#get_tree().create_timer(0.5).timeout.connect(s.queue_free)
+		#,)
+	#Global.game_main.add_child(s)
+	last_target_position=last_target_position.lerp(target_position,0.25)
 	super.rotate_gun()  # 调用父类旋转方法
 
 # 用于检测子弹的闪避区域
@@ -130,7 +134,6 @@ func init() -> void:
 	is_player = false  # 标记为非玩家实体
 	sprite.self_modulate = self_modulate  # 设置精灵颜色
 	map = Global.game_main.map  # 获取地图引用
-	# 随机设置初始目的地（从地图空点中选择）
 	destination = map.empty_tiles[randi()%map.empty_tiles.size()]
 	move_name = "Take a casual stroll"  # 初始移动状态为闲逛
 	is_pathfinding = true  # 开启寻路
@@ -188,9 +191,10 @@ func rebirth()->void:
 		gun.is_init=true
 		gun.id=randi()%GunData.names.size()
 	# 随机设置新目的地，恢复闲逛
-	destination=map.empty_tiles[randi()%map.empty_tiles.size()]
-	move_name="Take a casual stroll"
-	is_pathfinding=true  # 重新开启寻路
+	last_get_point_path_time=0
+	destination = map.empty_tiles[randi()%map.empty_tiles.size()]
+	move_name = "Take a casual stroll"  # 初始移动状态为闲逛
+	is_pathfinding = true  # 开启寻路
 
 # 移动逻辑（重写父类方法）
 func move()->void:
@@ -214,7 +218,7 @@ var is_pathfinding := false
 # 获取自身在地图上的坐标（格子坐标）
 func _get_pos_on_map()->Vector2i:
 	return map.local_to_map(map.to_local(global_position))
-var get_point_path_cd:=1000
+var get_point_path_cd:=3000
 var last_get_point_path_time:=0
 # 目的地属性（设置时自动计算路径）
 var destination:Vector2:
@@ -225,10 +229,9 @@ var destination:Vector2:
 		# 若关闭AI移动，则不更新目的地
 		if !Global.option_data["AI"]["AI 移动"]:
 			return
-		# 若目的地超出地图范围，随机选择一个空点
+		# 若目的地超出地图范围w
 		if !map.astar.is_in_boundsv(value):
-			value = map.empty_tiles[randi()%map.empty_tiles.size()]
-			move_name = "Take a casual stroll"
+			return
 		destination = value
 		# 计算从当前位置到目的地的路径
 		path = map.astar.get_point_path(_get_pos_on_map(), destination)

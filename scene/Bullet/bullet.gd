@@ -13,9 +13,10 @@ var free:=false
 @export var head:Area2D
 # 子弹发射的起始时间（毫秒），用于计算伤害衰减
 var start_time:int
-var trajectory:Sprite2D
+var trajectory:Sprite2D=null
 # 节点就绪时调用的函数
 func _ready() -> void:
+	last_fps=Engine.get_physics_frames()
 	speed=move.length()
 	# 根据枪械速度设置缩放比例（可能用于视觉效果或碰撞检测范围）
 	scale.x=GunData.bullet_speeds[gun_id]/16000.0
@@ -23,8 +24,7 @@ func _ready() -> void:
 	start_time=Time.get_ticks_msec()
 	# 添加碰撞例外，避免子弹立即击中发射者自身的受伤区域
 	add_exception(host.injury_area)
-	if Global.option_data["显示"]["弹道"]:
-		$Sprite2D.hide()
+	if Global.option_data["显示"]["弹道"]&&Engine.get_frames_per_second()>30:
 		trajectory=Sprite2D.new()
 		var gradient:=GradientTexture1D.new()
 		gradient.gradient=Gradient.new()
@@ -44,11 +44,14 @@ func _ready() -> void:
 					tween.finished.connect(node.queue_free)
 			)
 		)
-		
+
 		Global.game_main.add_child(trajectory)
-	# 等待0.1秒后播放子弹发射/飞行音效
-	await get_tree().create_timer(0.1).timeout
-	$AudioStreamPlayer2D.play()
+	else:
+		$Sprite2D.show()
+	if Engine.get_frames_per_second()>15:
+		# 等待0.1秒后播放子弹发射/飞行音效
+		await get_tree().create_timer(0.1).timeout
+		$AudioStreamPlayer2D.play()
 	get_tree().create_timer(4).timeout.connect(queue_free)
 	
 	
@@ -59,16 +62,13 @@ func hit(node: Node2D) -> void:
 	# 如果子弹已失效，则不处理
 	if free:
 		return
-	
 	# 获取碰撞节点的祖父节点（通常实体的根节点）
 	var entity=node.get_parent().get_parent()
-	
-	# 如果碰撞到的是实体（如敌人、玩家）
+	#如果碰撞到的是实体（如敌人、玩家）
 	if entity is Entity:
 		# 检查是否开启友伤，如果未开启且目标与发射者同阵营，则不造成伤害
 		if !Global.option_data["全局"]["友伤"]&&entity.camp==host.camp:
 			return
-		
 		# 如果发射者是玩家且开启了秒杀选项，直接将目标生命值设为0
 		if host.is_player&&Global.option_data["玩家"]["秒杀"]:
 			entity.set_health(0,host)
@@ -114,16 +114,23 @@ var speed:float
 var start_position:Vector2
 # 物理帧更新函数，处理子弹运动和碰撞检测
 var last_position:Vector2
+var period:=1
+var last_fps:=0
 func _physics_process(delta: float) -> void:
-	# 检查是否发生碰撞，如果是则处理碰撞逻辑
-	if is_colliding():
-		hit(get_collider())
-	elif trajectory!=null:
-		trajectory.global_position+=move*delta*0.5
-		trajectory.scale.x=max(0,trajectory.scale.x+speed*delta/256.0-0.2)
-	position=last_position
-	# 根据移动向量和delta时间更新子弹位置
-	last_position+=move*delta
-	target_position=to_local(last_position)
+	if Engine.get_physics_frames()%period==0:
+		period=max(1,240/Engine.get_frames_per_second())
+		var multiple:=Engine.get_physics_frames()-last_fps
+		# 检查是否发生碰撞，如果是则处理碰撞逻辑
+		if is_colliding():
+			hit(get_collider())
+		elif trajectory!=null:
+			trajectory.global_position+=move*delta*multiple*0.5
+			trajectory.scale.x=max(0,trajectory.scale.x+speed*delta*multiple/256.0-0.2)
+		position=last_position
+		# 根据移动向量和delta时间更新子弹位置
+		last_position+=move*delta*multiple
+		target_position=to_local(last_position)
+		#Engine.time_scale=1
+		last_fps=Engine.get_physics_frames()
 	
 	

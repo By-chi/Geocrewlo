@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://8xfw0wnfsxrc" path="res://texture/main/entity_thumbnail.svg" id="4_a17nd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_exvpm"]
-radius = 29.274563
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exvpm"]
 size = Vector2(128, 128)
@@ -100,7 +99,6 @@ shape = SubResource("RectangleShape2D_exvpm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
-zoom = Vector2(0.25, 0.25)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0

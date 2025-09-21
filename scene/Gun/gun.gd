@@ -34,9 +34,10 @@ var id:=1:
 			clip_capacity=GunData.clip_max_capacity[id]
 			# 设置换弹计时器时长
 			reload_timer.wait_time=GunData.reload_time[id]
+			shoot_cds=GunData.shoot_cds[id]
 			# 标记初始化完成
 			is_init=false
-			audio_stream_player2d.max_polyphony=max(1,int(GunData.shoot_sound[id].get_length()/GunData.shoot_cds[id]))
+			audio_stream_player2d.max_polyphony=max(1,int(GunData.shoot_sound[id].get_length()/shoot_cds))
 		# 更新扩散角度（每次ID变更时生效）
 		spread_angle=GunData.base_spread_angle[id]
 
@@ -52,7 +53,7 @@ func _ready() -> void:
 @export var audio_stream_player2d:AudioStreamPlayer2D
 # 上次射击的时间戳（毫秒），用于控制射击间隔
 var last_shoot_time:int
-
+var shoot_cds:=0
 # 射击逻辑函数
 func shoot()->void:
 	# 如果没有持有者，不执行射击
@@ -61,7 +62,7 @@ func shoot()->void:
 	# 计算距离上次射击的时间间隔
 	var interval:=Time.get_ticks_msec()-last_shoot_time
 	# 检查是否满足射击冷却时间
-	if interval>=GunData.shoot_cds[id]:
+	if interval>=shoot_cds:
 		# 检查弹夹是否有子弹
 		if clip_capacity>0:
 			# 在枪口位置生成枪口粒子效果
@@ -97,11 +98,11 @@ func shoot()->void:
 			
 			# 应用后坐力（枪支位置后移）
 			position+=Vector2.LEFT.rotated(rotation)*GunData.recoil[id]
-			
-			# 播放射击音效
-			audio_stream_player2d.stop()
-			audio_stream_player2d.stream=GunData.shoot_sound[id]
-			audio_stream_player2d.play()
+			if Engine.get_frames_per_second()>15||randi()%10==0:
+				# 播放射击音效
+				audio_stream_player2d.stop()
+				audio_stream_player2d.stream=GunData.shoot_sound[id]
+				audio_stream_player2d.play()
 			
 			# 减少弹夹容量（玩家且未开启无限子弹时生效）
 			if host != null and (!host.is_player||!Global.option_data["玩家"]["无限子弹"]):
@@ -113,8 +114,8 @@ func shoot()->void:
 			spread_angle+=GunData.burst_spread_increment[id]
 			
 			# 校准下次射击时间（处理射击间隔溢出，确保射速稳定）
-			var rollback:=GunData.shoot_cds[id]-interval
-			if rollback>-GunData.shoot_cds[id]:
+			var rollback:=shoot_cds-interval
+			if rollback>-shoot_cds:
 				last_shoot_time=Time.get_ticks_msec()+rollback
 			else:
 				last_shoot_time=Time.get_ticks_msec()

@@ -41,7 +41,7 @@ func _ready() -> void:
 
 	# 5. 根据游戏模式设置目标分数（不同模式胜利条件不同）
 	if arg["Mode"]==0||arg["Mode"]==1:
-		GameData.target_score=100  # 模式0/1：目标分数100（推测为积分制）
+		GameData.target_score=int(arg["Population"])*10  # 模式0/1：目标分数100（推测为积分制）
 	elif arg["Mode"]==2:
 		GameData.target_score=half_population  # 模式2：目标分数=阵营人数（推测为全灭制）
 
@@ -99,6 +99,7 @@ func _ready() -> void:
 			if Global.entity_list[i].size() - 1 == player_id && i == player_camp:
 				entity.is_player = true  # 标记为玩家实体
 				Global.player = entity   # 将玩家实体赋值给全局变量，供其他脚本调用
+				Global.global_names["player"]=entity
 
 			# 设置实体的阵营（索引0=阵营0，索引1=阵营1）
 			if i == 0:
@@ -108,7 +109,7 @@ func _ready() -> void:
 			entity.id = j  # 设置实体在阵营内的唯一ID（0~half_population-1）
 			add_child(entity)  # 将实体添加到主场景
 			entity.name_label.text="p"+str(i)+str(j)  # 设置实体名称标签（格式：p+阵营+ID，如p01）
-
+			Global.global_names[entity.name_label.text]=entity
 	# 10. 创建视野检测射线（仅阵营0→阵营1，用于遮挡检测）
 	# 遍历阵营0的每个实体，为其创建指向阵营1每个实体的射线
 	for i in half_population:

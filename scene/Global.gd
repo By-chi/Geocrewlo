@@ -21,6 +21,25 @@ var camp_view:Array[Array]=[[],[]]
 # 游戏结束标记（防止重复触发游戏结束逻辑）
 var is_over:=false
 
+
+
+
+
+
+var global_names:={
+	"global":self,
+	"game":game_main,
+	"entity_data":EntityData,
+	"gun_data":GunData,
+}
+
+
+
+
+
+
+
+
 # 游戏结束核心逻辑（判定胜负、清理场景、切换结算界面）
 func game_over()->void:
 	if is_over:
@@ -280,9 +299,6 @@ func _update_options()->void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	
-	print(ProjectSettings.get_setting("display/window/stretch/scale"))
-	#get_tree().root.child_controls_changed()
 	# 控制FPS显示（从"显示"→"显示FPS"读取，需游戏主节点已初始化）
 	if game_main!=null:
 		game_main.UI.Fps.visible=option_data["显示"]["显示 \"FPS\""]

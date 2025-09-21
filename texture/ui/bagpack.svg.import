@@ -1,14 +1,14 @@
 [remap]
 
 importer="svg"
-type="SVGTexture"
+type="DPITexture"
 uid="uid://c5l0ij3gnr1p0"
-path="res://.godot/imported/bagpack.svg-3ebea3dba6d419b3c7244dd46a4d91ba.svgtex"
+path="res://.godot/imported/bagpack.svg-3ebea3dba6d419b3c7244dd46a4d91ba.dpitex"
 
 [deps]
 
 source_file="res://texture/ui/bagpack.svg"
-dest_files=["res://.godot/imported/bagpack.svg-3ebea3dba6d419b3c7244dd46a4d91ba.svgtex"]
+dest_files=["res://.godot/imported/bagpack.svg-3ebea3dba6d419b3c7244dd46a4d91ba.dpitex"]
 
 [params]
 

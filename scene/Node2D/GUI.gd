@@ -9,6 +9,23 @@ extends CanvasLayer
 @export var Fps:Label
 @export var elimination_aannouncement:VBoxContainer
 var entity:Entity
+
+
+var t_number:=0.0:
+	set(value):
+		t_number=value
+		if t_number>=10:
+			t_number=0
+			$Console.show()
+var last_t_time:=0
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.keycode==KEY_T&&event.is_released():
+			if t_number<10:
+				t_number+=1
+			t_number=max(0,t_number-(Time.get_ticks_msec()-last_t_time)/500.0)
+			last_t_time=Time.get_ticks_msec()
+			
 func _ready() -> void:
 	Fps.visible=Global.option_data["显示"]["显示 \"FPS\""]
 func _process(delta: float) -> void:
